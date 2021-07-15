@@ -1,9 +1,14 @@
+
+body {
+    text-align: center;
+}
+
 #grid {
-    width: 400px;
+    width: 800px;
     height: 800px;
     display: flex;
     flex-wrap: wrap;
-    /* background-color: aqua; */
+    margin: 0 auto;
 }
 
 .square {
