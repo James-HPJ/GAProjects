@@ -1,0 +1,17 @@
+#grid {
+    width: 400px;
+    height: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    /* background-color: aqua; */
+}
+
+.square {
+    width: 20px;
+    height: 20px;
+    background-color: yellow;
+}
+
+.catcher {
+    background-color: black;
+}
