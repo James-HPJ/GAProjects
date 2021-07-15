@@ -1,0 +1,27 @@
+body{
+    text-align: center;
+}
+
+
+.container{
+    position: relative;
+}
+
+
+#my-canvas-1{
+    background: rgb(245, 245, 245);
+    display:inline-block;
+    width: 480px;
+    height: 600px;
+    border: 2px solid black;
+    
+}
+
+#my-canvas-2{
+    background: rgb(245, 245, 245);
+    display:inline-block;
+    width: 480px;
+    height: 600px;
+    border: 2px solid black;
+    
+}
