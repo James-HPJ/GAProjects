@@ -17,11 +17,11 @@ const row = 40
 
 //set shape of catcher in an array, using reference to square array
 const catcher = [ 1599-(row/2), 1599-(row/2)+1, 1559-(row/2), 1559-(row/2)-1, 1559-(row/2)+1, 1559-(row/2)+2]
-
+let catcherPosition = 0
 //create a function to draw the catcher during game
 function drawCatcher() {
     catcher.forEach(index => {
-        squares[index].classList.add('catcher')
+        squares[index + catcherPosition].classList.add('catcher')
     })
 }
 
@@ -30,7 +30,7 @@ function drawCatcher() {
 //create a function to undraw catcher
 function undrawCatcher() {
     catcher.forEach(index => {
-        squares[index].classList.remove('catcher')
+        squares[index + catcherPosition].classList.remove('catcher')
     })
 }
 
@@ -70,11 +70,52 @@ function undrawBrick() {
     fallingBrick.forEach(index => {
         if(startPosition + index > (row-1)){
             startPosition = startPosition-(startPosition+index - (row-1))
-            squares[startPosition + index].classList.remove('brick')
+            squares[startPosition + index + moveDown].classList.remove('brick')
         } else {
             squares[startPosition + index + moveDown].classList.remove('brick')
         }
     })
+}
+
+function controlCatcher(e) {
+    if(e.keyCode === 37) {
+        moveLeft()
+    } else if (e.keyCode === 39) {
+        moveRight()
+    }
+}
+
+document.addEventListener('keydown', controlCatcher)
+
+function moveLeft() {
+    undrawCatcher()
+    const atLeftEnd = catcher.some(index => (index + catcherPosition) % row === 0)
+    if(!atLeftEnd) {
+        catcherPosition -= 1
+    }
+    drawCatcher()
+}
+
+function moveRight() {
+    undrawCatcher()
+    const atRightEnd = catcher.some(index => (index + catcherPosition) % row === row -1)
+    if(!atRightEnd) {
+        catcherPosition += 1
+    }
+    drawCatcher()
+}
+
+function catchBrick() {
+    if(fallingBrick.some(index => squares[startPosition + index + moveDown].classList.contains('catcher') )) {
+        console.log('caught')
+        
+        undrawBrick()
+        startPosition = Math.floor(Math.random()*row)
+        moveDown = 0
+        fallingBrick = bricks[Math.floor(Math.random()*bricks.length)]
+
+        drawBrick()
+    }
 }
 
 function descendingBricks() {
@@ -82,7 +123,8 @@ function descendingBricks() {
     undrawBrick()
     moveDown += 40
     drawBrick()
+    catchBrick()
 }
 
-setInterval(descendingBricks, 1000)
+setInterval(descendingBricks, 100)
 
