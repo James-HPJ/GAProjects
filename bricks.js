@@ -83,7 +83,8 @@ function undrawBrick() {
     })
 }
 
-//create function to control the catcher's left & right movements
+//create function to control the catcher's left & right movements, 
+// left and right arrows move positions by 1 div, while 'a' and 's' move by 2 divs
 function controlCatcher(e) {
     if(e.keyCode === 37) {
         moveLeft(1)
@@ -156,7 +157,7 @@ function descendingBricks() {
 }
 
 
-
+//listner to start or restart the game with start button
 startButton.addEventListener('click', function() {
     if(timer) {
         undrawBrick()
