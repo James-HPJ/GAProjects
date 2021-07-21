@@ -24,3 +24,9 @@ body {
 .brick {
     background-color: red;
 }
+
+#score {
+    border:solid black;
+    width: 10%;
+    display: inline-block;
+}
