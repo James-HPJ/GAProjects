@@ -1,5 +1,9 @@
 body{
     text-align: center;
+    font-family: 'PT Sans', sans-serif;
+    background-image: url('pictures/pencilGameBackground.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 
@@ -25,3 +29,32 @@ body{
     border: 2px solid black;
     
 }
+#keyboard-icons {
+    
+display: inline-block;
+}
+.key-icons {
+    margin-top: 10px;
+    border-radius: 8px;
+    width: 2.5%;
+}
+/* 
+#keyboard{
+  position: absolute; 
+  left: 100px;  
+} */
+
+h2 {
+    display: inline-block;
+    padding-top: 10px;
+    margin: 0 20px 0 20px ;
+}
+
+#a-key {
+    margin-left: 20px;
+}
+
+#s-key {
+    margin-right: 200px;
+}
+

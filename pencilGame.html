@@ -6,16 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="pencilGame.css">
     <link rel="icon" href="favicon.ico">
-    <title>Fatest Fingers!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
+    <title>Fastest Fingers!</title>
 </head>
 <body>
-    <h1>Fatest Fingers First! First to eject 5 pencil lead Wins!</h1>
+    <h1>First to eject 5 pencil leads Wins!</h1>
+    <button id='start-button'>Click here to Start</button>
     <div id='conatiner'>
         <canvas class="canvas" id="my-canvas-1"></canvas>
         <canvas class="canvas" id="my-canvas-2"></canvas>
-
-       
-        <script src="pencilGame.js"></script>
     </div>
+    <div id='keyboard-icons'>
+        <img src="pictures/keyboard.png" alt="keyboard" id='keyboard' class="key-icons">
+        <h3>To eject pencil lead press:</h3>
+        <img src="pictures/a-key.png " alt="letter a" id='a-key' class="key-icons">
+        <h2>or</h2>
+        <img src="pictures/s-key.png" alt="letter s" id='s-key' class="key-icons" >
+        <img src="pictures/k-key.png" alt="letter k" class="key-icons">
+        <h2>or</h2>
+        <img src="pictures/l-key.png" alt="letter l" class="key-icons" >
+
+    </div>
+
+    <script src="pencilGame.js"></script>
+
 </body>
 </html>
