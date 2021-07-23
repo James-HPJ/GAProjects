@@ -45,8 +45,12 @@ let endPtLead1x = 108
 let endPtLead1y = 95
 
 //set variable for change in coordinates after key event
-let dx1 = -0.6
-let dy1 = 0.4
+// let dx1 = -0.6
+// let dy1 = 0.4
+
+let dx1 = -3
+let dy1 = 2
+
 
 //draw Lead1
 function drawLead1(){
@@ -77,8 +81,12 @@ let endPtLead2x = 108
 let endPtLead2y = 95
 
 //set variable for change in coordinates after key event
-let dx2 = -0.6
-let dy2 = 0.4
+// let dx2 = -0.6
+// let dy2 = 0.4
+
+let dx2 = -3
+let dy2 = 2
+
 
 //draw Lead2
 function drawLead2(){
@@ -148,7 +156,11 @@ const p1Sound = new Audio('sounds/pencil1.wav')
 
 const p2Sound = new Audio('sounds/pencil2.wav')
 
+//add music to be played during gameplay
 const gameMusic = new Audio('sounds/pencilGame.mp3')
+
+//add sound for game victory
+const victorySound = new Audio('sounds/pencilGameVictory.wav')
 
 function draw() {
 
@@ -182,6 +194,8 @@ function draw() {
     } 
 
     if(score1 === 5){
+        gameMusic.pause()
+        victorySound.play()
         alert("Player 1 wins!")
         score1 = 0
         score2 = 0
@@ -209,6 +223,8 @@ function draw() {
     }
     
     if(score2 === 5){
+        gameMusic.pause()
+        victorySound.play()
         alert("Player 2 wins!")
         score1 = 0
         score2 = 0
