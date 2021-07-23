@@ -1,6 +1,11 @@
 
 body {
     text-align: center;
+    font-family: 'PT Sans', sans-serif;
+    color: rgb(250, 250, 250);
+    background-image: url(pictures/brickGameBackground.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #grid {
@@ -8,25 +13,40 @@ body {
     height: 800px;
     display: flex;
     flex-wrap: wrap;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 
 .square {
     width: 20px;
     height: 20px;
-    background-color: yellow;
+    background-color: rgb(0, 0, 0);
 }
 
 .catcher {
-    background-color: black;
+    background-color: rgb(255, 255, 255);
 }
 
 .brick {
-    background-color: red;
+    background-color: rgb(228, 127, 13);
 }
 
 #score {
     border:solid black;
     width: 10%;
     display: inline-block;
+}
+
+#instructions {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.instructions {
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.icons {
+    width: 1.5%;
+    height: auto;
 }

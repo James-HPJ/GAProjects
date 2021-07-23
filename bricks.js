@@ -25,9 +25,14 @@ let timer = ''
 let scoreBoard = document.querySelector('#score')
 let score = 0
 
+//add game sound/music
+const brickSound = new Audio('sounds/catchBrick.wav')
+const gameMusic = new Audio('sounds/brickGame.mp3')
+
 //set shape of catcher in an array, using reference to square array
 const catcher = [ 1599-(row/2), 1599-(row/2)+1, 1559-(row/2), 1559-(row/2)-1, 1559-(row/2)+1, 1559-(row/2)+2]
 let catcherPosition = 0
+
 //create a function to draw the catcher during game
 function drawCatcher() {
     catcher.forEach(index => {
@@ -124,6 +129,8 @@ function moveRight(rightSpeed) {
 function catchBrick() {
     if(fallingBrick.some(index => squares[startPosition + index + moveDown].classList.contains('catcher') )) {
         undrawBrick()
+        brickSound.play()
+        brickSound.currentTime = 0
         score += 50
         scoreBoard.innerHTML = score
         startPosition = Math.floor(Math.random()*row)
@@ -163,7 +170,10 @@ startButton.addEventListener('click', function() {
         undrawBrick()
         clearInterval(timer)
         timer = null
+        gameMusic.pause()
     } else {
+        gameMusic.play()
+        gameMusic.loop = true
         drawCatcher()
         startPosition = Math.floor(Math.random()*row)
         moveDown = 0

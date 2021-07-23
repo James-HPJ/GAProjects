@@ -5,13 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="bricks.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
+    <link rel="icon" href="pictures/brickFavicon.ico">
     <title>Falling Bricks!</title>
 </head>
 <body>
     <h1>Catch all Falling Bricks!</h1>
+    <div id='instructions'>Move the Catcher using:</div>
+    <img src='pictures/left-key.png' alt='left key' class='icons'>
+    <img src='pictures/a-key.png' alt='a key' class='icons'>
+    <div class='instructions'>(left X 2)</div>
+    <img src='pictures/right-key.png' alt='right key' class='icons'>
+    <img src='pictures/s-key.png' alt='s key' class='icons'>
+    <div class='instructions'>(right X 2)</div>
     <button id='start-button'>Start/Restart</button>
     <div id='score'>0</div>
     <div id='grid'></div>
-    <script src='bricks.js'></script>
+    <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 </body>
+<script src='bricks.js'></script>
+
 </html>

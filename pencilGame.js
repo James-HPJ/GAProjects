@@ -100,11 +100,9 @@ function drawLead2(){
 
 //add event listener for player 1 keys
 document.addEventListener("keydown", player1KeyDown, false)
-document.addEventListener("keyup", player1KeyUp, false)
 
 //add event listener for player 2 keys
 document.addEventListener("keydown", player2KeyDown, false)
-document.addEventListener("keyup", player2KeyUp, false)
 
 // default state of keys to be false, until activated
 let player1Keys = false
@@ -127,12 +125,6 @@ function player1KeyDown(e) {
 
 }
 
-function player1KeyUp(e) {
-    if(e.key == "a" || e.key == "s") {
-        player1KeysUp = false
-
-    }
-}
 
 function player2KeyDown(e) {
     if(e.key == "k" || e.key == "l") {
@@ -145,11 +137,6 @@ function player2KeyDown(e) {
 
 }
 
-function player2KeyUp(e) {
-    if(e.key == "k" || e.key == "l") {
-        player2Keys = false
-    }
-}
 
 //add sounds for pencil action
 const p1Sound = new Audio('sounds/pencil1.wav')
@@ -162,6 +149,7 @@ const gameMusic = new Audio('sounds/pencilGame.mp3')
 //add sound for game victory
 const victorySound = new Audio('sounds/pencilGameVictory.wav')
 
+//function for the gameplay
 function draw() {
 
     drawPencil1()
@@ -235,6 +223,7 @@ function draw() {
 requestAnimationFrame(draw)
 }
 
+//event listener to button for starting game
 document.getElementById('start-button').addEventListener('click', function() {
     draw()
     gameMusic.play()
