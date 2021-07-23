@@ -1,5 +1,5 @@
 //Create Squares in the Grid(div in html) using loop
-//for 20x20 square, will require 800 squares for grid(400X800)
+//for 20x20 square, will require 1600 squares for grid(800X800)
 for(let i=0; i<1600; i++){
     const square = document.createElement('div')
     square.className = 'square'
