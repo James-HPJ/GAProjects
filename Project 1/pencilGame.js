@@ -104,11 +104,11 @@ document.addEventListener("keydown", player1KeyDown, false)
 //add event listener for player 2 keys
 document.addEventListener("keydown", player2KeyDown, false)
 
-// default state of keys to be false, until activated
+//default state of keys to be false, until activated
 let player1Keys = false
 let player2Keys = false
 
-
+//function to decide what keys to do what
 function player1KeyDown(e) {
 
     console.log('plyer 1 down')
