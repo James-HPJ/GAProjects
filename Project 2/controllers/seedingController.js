@@ -1,5 +1,5 @@
 const express = require("express");
-const snakeModel = require("../models/snakes");
+const snakesModel = require("../models/snakes");
 const controller = express.Router();
 
 controller.get('/seed', async(req, res) => {
