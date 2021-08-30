@@ -2,18 +2,18 @@ const express = require("express");
 const snakesModel = require("../models/snakes");
 const controller = express.Router();
 
-controller.get('/', (req, res)=> {
+controller.get('/', async (req, res)=> {
 
-    // const snakes = await snakesModel
-    // .find()
-    // .sort({ dateFound: 'desc'})
-    // .limit(6)
-    // .exec()
+    const snakes = await snakesModel
+    .find()
+    .sort({ dateFound: 'desc'})
+    .limit(3)
+    .exec()
 
-    res.render('webpages/homepage.ejs') 
-    // {
-    //     snakes,
-    // })
+    res.render('webpages/homepage.ejs',
+    {
+        snakes,
+    })
 
 })
 

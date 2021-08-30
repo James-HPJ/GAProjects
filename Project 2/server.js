@@ -4,8 +4,8 @@ const session = require("express-session")
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 
-const homepageController = require("./controllers/homepageController");
-const seedingController = require("./controllers/seedingController");
+const homepageController = require("./controllers/homepageController")
+const seedingController = require("./controllers/seedingController")
 
 const mongoURI = "mongodb://localhost:27017/snakesdb"
 const dbConnection = mongoose.connection
@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
 
 app.use(homepageController);
-app.use('/seed', seedingController)
+// app.use(seedingController)
 
 
 
