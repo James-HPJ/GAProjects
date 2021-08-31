@@ -4,8 +4,8 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="/"><img src="https://lh3.googleusercontent.com/rIuzUNnL5VA7JqKS1Ahsk3Uxwde8aLVRO_p6VAIVWy4RGrvBzSetGYvaRPwDWvrGqhOUzC7e_28Ap0C43BYlVUBNFvEmI_Kd4wRxGR238qOHWWu77b6i21Gtk-uClrkOkiCJe_wJYA=w2400" alt="snakeLogo" class="homepageLogo"></a>
 
-        <a class="navbar-brand ps-3" href="/">
-            <h2>Snakes of Singapore Society
+        <a class="navbar-brand ps-3" href="/members">
+            <h2>Snakes of Singapore Society - Members Home
             </h2>
         </a>
 
@@ -15,10 +15,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 pe-5">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
+                    <a class="nav-link" href="/user/logout">Logout</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/user/login">Login</a>
+                    <a class="nav-link" href="/user/signup">Signup</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact Us</a>
@@ -27,21 +27,10 @@
         </div>
     </nav>
 
-    <div class="container mt-5">
-        <h2 class="mb-3">Sign up</h2>
-        <form method="POST" action="/user/signup">
-          <div class="mb-3">
-            <label for="username" class="form-label">Username:</label>
-            <input type="text" name="username" class="form-control" />
-          </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Password:</label>
-            <input type="password" name="password" class="form-control" />
-          </div>
-          <div>
-            <input type="submit" class="btn btn-outline-dark btn-lg mb-3" value="Sign up" />
-          </div>
-        </form>
-      </div>
+    
 
-    <%- include("../partials/footer.ejs") %>
+
+
+
+
+<%- include("../partials/footer.ejs") %>
