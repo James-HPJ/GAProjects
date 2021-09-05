@@ -49,7 +49,7 @@ passport.deserializeUser(User.deserializeUser())
 app.use(homepageController);
 app.use('/user', userController)
 app.use('/members', membersController)
-// app.use(seedingController)
+app.use(seedingController)
 
 
 

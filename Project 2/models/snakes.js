@@ -6,7 +6,8 @@ const {Schema} = mongoose
 const pointSchema = new Schema({
     type: {
       type: String,
-      default: 'Point',
+      enum: 'Point',
+      required: true
     },
     coordinates: {
       type: [Number],
@@ -21,7 +22,7 @@ const snakeSchema = new Schema (
         img: String,
         dateFound: { type: Date, default: new Date() },
         description: {type: String, required: true },
-        location: {type: pointSchema, index: '2dsphere'},
+        location: {type: pointSchema, required: true},
     },
 
     {

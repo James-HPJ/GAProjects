@@ -3,8 +3,23 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-.homepageLogo{
+.homepageLogo {
     border-radius: 100%;
     width: 100px;
 }
 
+.snakeImg {
+    border-radius: 20%;
+    width: 300px;
+}
+
+.snakes {
+    text-align: left;
+}
+
+#map {
+    height: 300px;
+    /* The height is 400 pixels */
+    width: 75%;
+    /* The width is the width of the web page */
+  }
