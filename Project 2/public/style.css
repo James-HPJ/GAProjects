@@ -23,8 +23,17 @@
     width: 100%;
     /* The width is the width of the web page */
   
-  }
+}
 
-  .snake-map{
+.snake-map{
     text-align: center;
-  }
+}
+
+.selectedSnakeImg{
+    width: 70%;
+}
+
+.vectors{
+    margin-right: 10px;
+    width: 2%;
+}

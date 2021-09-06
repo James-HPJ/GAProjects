@@ -35,25 +35,33 @@
           <div class="mb-3">
             <label for="commonName" class="form-label">Common Name:</label>
             <input type="text" name="commonName" class="form-control" />
+          </div>        
+          <div class="mb-3">
+            <label for="scientificName" class="form-label">Scientific Name:</label>
+            <input type="text" name="scientificName" class="form-control" />
           </div>
           <div class="mb-3">
             <label for="img" class="form-label">Specimen Image:</label>
             <input type="file" name="img" class="form-control" accept="image/*"/>
           </div>
           <div class="mb-3">
-            <label for="description" class="form-label">Description:</label>
-            <input type="text" name="description" class="form-control" />
-          </div>
-          <div class="mb-3">
             <label for="dateFound" class="form-label">Date:</label>
             <input type="datetime-local" name="dateFound" class="form-control" />
           </div>
           <div class="mb-3">
-            <label for="location" class="form-label">location:</label>
-            <input type="text" name="location" class="form-control"></input>
+            <label for="description" class="form-label">Description:</label>
+            <input type="text" name="description" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="latitude" class="form-label">location-latitude:(leave this field empty to use current location)</label>
+            <input type="text" name="latitude" class="form-control"></input>
+          </div>        
+          <div class="mb-3">
+            <label for="longitude" class="form-label">location-longitude:(leave this field empty to use current location)</label>
+            <input type="text" name="longitude" class="form-control"></input>
           </div>
           <div>
-            <input type="submit" class="btn btn-primary mb-3" value="Create new post" />
+            <input type="submit" class="btn btn-primary mb-3" value="Create new Snake" />
           </div>
         </form>
       </div>

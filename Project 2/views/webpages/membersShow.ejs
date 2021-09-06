@@ -58,13 +58,46 @@
     </div>
 </nav>
 
+<div class="container my-5">
+    <h3 class="mb-3"><%= selectedSnake.commonName %></h3>
+    <div class="row  my-3">
+        <div class="col col-lg-6">
+            <% if(selectedSnake.img.charAt(0) == 'i'){ %>
+                <img src="/<%= selectedSnake.img %>" alt="snake img" class="selectedSnakeImg ">
+            <% } else {%>
+                <img src="<%= selectedSnake.img %>" alt="snake img" class="selectedSnakeImg ">
+            <% } %>
+        </div>
+
+        <div class="col col-lg-6">
+            <h4><img src="/vectors/snake.png" alt="snake vector" class="vectors pr-3"><%= selectedSnake.scientificName %></h4>
+            <h4><img src="/vectors/product-description.png" alt="description vector" class="vectors"><%= selectedSnake.description %></h4>
+            <h4><img src="/vectors/calendar.png" alt="calendar vector" class="vectors"><%= selectedSnake.dateFound.toDateString() %></h4>
+            <h4><img src="/vectors/user.png" alt="user vector" class="vectors"><%= selectedSnake.username %></h4>
+            
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="container-fluid">
+    <div class="col snake-map my-5">
+        <h3>Snake Location <img src="/vectors/location.png" alt="location icon" class="vectors"></h3>
+        <!--The div element for the map -->
+        <div id="map"></div>
+    </div>
+</div>
+
+
 <div class="container">
     <div class="row bootstrap snippets bootdeys">
         <div class="col-md-8 col-sm-12">
             <div class="comment-wrapper">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        Comment panel
+                        <strong>Comments</strong> 
                     </div>
                     <div class="panel-body">
                         <form method="POST" action="/members/<%=selectedSnake.id%>" enctype="multipart/form-data">
@@ -95,22 +128,15 @@
     
         </div>
     </div>
-    </div>
-
-
-<div class="container-fluid">
-    <div class="col snake-map my-5">
-        <h3>Snake Location</h3>
-        <!--The div element for the map -->
-        <div id="map"></div>
-    </div>
 </div>
+
+
+
 
 
 <script
     src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.MAPKEY %>&callback=initMap&libraries=&v=weekly"
     async></script>
-</div>
 
 
 <%- include("../partials/footer.ejs") %>
