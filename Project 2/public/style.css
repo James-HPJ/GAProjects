@@ -14,12 +14,17 @@
 }
 
 .snakes {
-    text-align: left;
+    text-align: center;
 }
 
 #map {
-    height: 300px;
+    height: 400px;
     /* The height is 400 pixels */
-    width: 75%;
+    width: 100%;
     /* The width is the width of the web page */
+  
+  }
+
+  .snake-map{
+    text-align: center;
   }

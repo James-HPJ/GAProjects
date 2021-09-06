@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="/style.css">
-        >
-        <title>Members</title></head><body>
-        
+<%- include("../partials/header.ejs") %>
         
         <script>
            
@@ -51,7 +37,7 @@
                 <a class="navbar-brand" href="/"><img src="https://lh3.googleusercontent.com/rIuzUNnL5VA7JqKS1Ahsk3Uxwde8aLVRO_p6VAIVWy4RGrvBzSetGYvaRPwDWvrGqhOUzC7e_28Ap0C43BYlVUBNFvEmI_Kd4wRxGR238qOHWWu77b6i21Gtk-uClrkOkiCJe_wJYA=w2400" alt="snakeLogo" class="homepageLogo"></a>
 
                 <a class="navbar-brand ps-3" href="/members">
-                    <h2>Snakes of Singapore Society - Members Home
+                    <h2>Snakes of Singapore Society - Members 
                     </h2>
                 </a>
 
@@ -64,7 +50,7 @@
                             <a class="nav-link" href="/user/logout">Logout</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/user/signup">Signup</a>
+                            <a class="nav-link" href="/members/new">Submit Entry</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contact Us</a>
@@ -74,12 +60,12 @@
             </div>
         </nav>
 
-        <div class="container snakes row">
+        <div class="container-fluid snakes row">
             <h2 class="my-5">Snakes Sighted in Singapore</h2>
 
             <% for(let snake of snakes) { %>
                 <div class="media my-5 col-6">
-                    <img class="mr-3 snakeImg " src="<%= snake.img %>" alt="Snake image">
+                   <a href="/members/<%= snake.id %>"><img class="mr-3 snakeImg " src="<%= snake.img %>" alt="Snake image"></a> 
                     <div class="media-body">
                         <h5 class="mt-0"><%= snake.scientificName %></h5>
                         <%= snake.dateFound.toDateString() %>,
@@ -88,8 +74,8 @@
                 </div>
             <% } %>
 
-            <div class="col-6">
-                <h3>Snake Location</h3>
+            <div class="col snake-map my-5">
+                <h3>Snakes Location</h3>
                 <!--The div element for the map -->
                 <div id="map"></div>
             </div>
@@ -97,5 +83,4 @@
                 src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.MAPKEY %>&callback=initMap&libraries=&v=weekly"
                 async></script>
         </div>
-    </body>
-</html>
+<%- include("../partials/footer.ejs") %>

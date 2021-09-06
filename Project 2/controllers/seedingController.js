@@ -15,6 +15,7 @@ controller.get('/seed', async(req, res) => {
                 coordinates: [ 103.773746, 1.353429 ],
         
             },
+            username: 'James_Hong',
         },
         {
             commonName: 'Reticulated Python',  
@@ -26,6 +27,8 @@ controller.get('/seed', async(req, res) => {
                 type: 'Point', 
                 coordinates: [ 103.812770, 1.339709 ],
             },
+            username: 'James_Hong',
+
         },       
         
         {
@@ -38,6 +41,8 @@ controller.get('/seed', async(req, res) => {
                 type: 'Point', 
                 coordinates: [ 103.822886, 1.380250 ],
             },
+            username: 'James_Hong',
+
         },        
         
         {
@@ -50,6 +55,8 @@ controller.get('/seed', async(req, res) => {
                 type: 'Point', 
                 coordinates:  [ 103.828962, 1.246694 ],
             },
+            username: 'James_Hong',
+
         }, 
         
         {
@@ -62,6 +69,8 @@ controller.get('/seed', async(req, res) => {
                 type: 'Point', 
                 coordinates: [103.773971, 1.360896 ],
             },
+            username: 'James_Hong',
+
         },
         
         {
@@ -74,6 +83,8 @@ controller.get('/seed', async(req, res) => {
                 type: 'Point', 
                 coordinates: [ 103.827170, 1.251685 ],
             },
+            username: 'James_Hong',
+
         },       
         
         {
@@ -86,6 +97,8 @@ controller.get('/seed', async(req, res) => {
                 type: 'Point', 
                 coordinates: [ 103.778462, 1.347380 ],
             },
+            username: 'James_Hong',
+
         },       
         
         {
@@ -98,6 +111,8 @@ controller.get('/seed', async(req, res) => {
                 type: 'Point', 
                 coordinates: [ 103.819005, 1.415737 ],
             },
+            username: 'James_Hong',
+
         },
         
     ])

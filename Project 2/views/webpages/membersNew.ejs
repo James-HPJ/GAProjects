@@ -1,7 +1,7 @@
 <%- include("../partials/header.ejs") %>
 </head>
 <body>
-  
+
   <nav class="navbar navbar-expand-lg navbar-light row bg-success bg-opacity-75 p-2 sticky-top ">
     <div class="container-fluid">
         <a class="navbar-brand" href="/"><img src="https://lh3.googleusercontent.com/rIuzUNnL5VA7JqKS1Ahsk3Uxwde8aLVRO_p6VAIVWy4RGrvBzSetGYvaRPwDWvrGqhOUzC7e_28Ap0C43BYlVUBNFvEmI_Kd4wRxGR238qOHWWu77b6i21Gtk-uClrkOkiCJe_wJYA=w2400" alt="snakeLogo" class="homepageLogo"></a>
@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 pe-5">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
+                    <a class="nav-link" href="/user/login">Login</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/user/signup">Signup</a>
@@ -29,19 +29,31 @@
         </div>
     </nav>
 
-    <div class="container mt-5">
-        <h2 class="mb-3">Login</h2>
-        <form method="POST" action="/user/login">
+    <div class="container">
+        <h2>Create a snake</h2>
+        <form method="POST" action="/members" enctype="multipart/form-data">
           <div class="mb-3">
-            <label for="username" class="form-label">Username:</label>
-            <input type="text" name="username" class="form-control" />
+            <label for="commonName" class="form-label">Common Name:</label>
+            <input type="text" name="commonName" class="form-control" />
           </div>
           <div class="mb-3">
-            <label for="password" class="form-label">Password:</label>
-            <input type="password" name="password" class="form-control" />
+            <label for="img" class="form-label">Specimen Image:</label>
+            <input type="file" name="img" class="form-control" accept="image/*"/>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <input type="text" name="description" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="dateFound" class="form-label">Date:</label>
+            <input type="datetime-local" name="dateFound" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="location" class="form-label">location:</label>
+            <input type="text" name="location" class="form-control"></input>
           </div>
           <div>
-            <input type="submit" class="btn btn-outline-dark btn-lg mb-3" value="Submit" />
+            <input type="submit" class="btn btn-primary mb-3" value="Create new post" />
           </div>
         </form>
       </div>

@@ -22,7 +22,8 @@ const snakeSchema = new Schema (
         img: String,
         dateFound: { type: Date, default: new Date() },
         description: {type: String, required: true },
-        location: {type: pointSchema, required: true},
+        location: {type: pointSchema, /*required: true*/},
+        username: { type: String, required: true },        
     },
 
     {
@@ -31,5 +32,6 @@ const snakeSchema = new Schema (
 )
 
 const Snake = mongoose.model('Snake', snakeSchema)
+
 
 module.exports = Snake
