@@ -72,7 +72,13 @@
 
             <% for(let snake of snakes) { %>
                 <div class="media my-5 col-6">
-                   <a href="/members/<%= snake.id %>"><img class="mr-3 snakeImg " src="<%= snake.img %>" alt="Snake image"></a> 
+                   <a href="/members/<%= snake.id %>">
+                    <% if( snake.img.charAt(0) == 'i'){ %>
+                        <img src="/<%= snake.img %>" alt="snake img" class="selectedSnakeImg ">
+                    <% } else {%>
+                        <img src="<%= snake.img %>" alt="snake img" class="selectedSnakeImg ">
+                    <% } %>
+                    </a> 
                     <div class="media-body">
                         <h5 class="mt-0"><%= snake.scientificName %></h5>
                         <%= snake.dateFound.toDateString() %>,

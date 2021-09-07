@@ -62,12 +62,15 @@ controller.get('/:id', async (req, res)=> {
 
         const commentsForSnake = await comments.find({ snakeId:req.params.id}).sort({ dateFound: 'ascending'}).exec()
 
+        const edit = req.query.edit
+
         if( req.isAuthenticated() ){
             res.render('webpages/membersShow.ejs',
             {
                 snakes,
                 selectedSnake,
-                commentsForSnake
+                commentsForSnake,
+                edit
             })
         }
 
@@ -83,9 +86,9 @@ controller.post('/', async (req, res)=> {
     
         const snakeInputs = {
             commonName: req.body.commonName,
-            scientificName: req.body.commonName,
+            scientificName: req.body.scientificName,
             img: `images/${req.file.filename}`,
-            dateFound: req.body.dateFound,
+            dateFound: new Date(req.body.dateFound),
             description: req.body.description,
             location: {
                 type: 'Point',
@@ -120,5 +123,54 @@ controller.post('/:id', async (req, res)=> {
     }
 })
 
+controller.get('/:id/edit', async( req, res)=> {
+    try {
+        const selectedSnake = await snakesModel.findById(req.params.id)
+
+        if( req.isAuthenticated() ){
+            res.render('webpages/membersEdit.ejs',
+            {
+                selectedSnake,
+            })
+        }
+
+    } catch (error) {
+        res.send(error.message)
+    }
+})
+
+controller.put('/:id', async (req, res)=> {
+    try {
+
+        const selectedSnake = await snakesModel.findById(req.params.id)
+
+        if(req.user.username === selectedSnake.username ){
+
+            const snakeInputs = {
+                commonName: req.body.commonName,
+                scientificName: req.body.commonName,
+                img: `images/${req.file.filename}`,
+                dateFound: new Date(req.body.dateFound),
+                description: req.body.description,
+                location: {
+                    type: 'Point',
+                    coordinates:[ req.body.longitude, req.body.latitude]
+                },
+            }
+    
+            await snakesModel.updateOne({
+                _id: req.params.id,
+              }, snakeInputs);
+    
+            res.redirect(`/members/${req.params.id}?edit=success`)
+        } else {
+            res.redirect(`/members/${req.params.id}?edit=fail`)
+        }
+
+    } catch (error) {
+        res.send(error.message)
+    }
+
+})
 
 module.exports = controller
