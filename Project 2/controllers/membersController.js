@@ -2,7 +2,7 @@ const express = require("express");
 const snakesModel = require("../models/snakes");
 const comments = require("../models/comments")
 const controller = express.Router();
-const geolocation = require("geolocation")
+
 
 const multer = require("multer");
 
@@ -31,10 +31,16 @@ controller.get('/', async (req, res)=> {
         .sort({ dateFound: 'desc'})
         .exec()
 
+        const login = req.query.login
+
+        const user = req.user.username
+
         if( req.isAuthenticated() ){
             res.render('webpages/members.ejs',
             {
                 snakes,
+                login,
+                user
             })
         }
        } catch(error){
@@ -74,24 +80,7 @@ controller.get('/:id', async (req, res)=> {
 
 controller.post('/', async (req, res)=> {
     try {
-        let lat =''
-        let long = ''
-        if(req.body.latitude && req.body.longitude) {
-            lat = req.body.latitude
-            long = req.body.longitude
-        } else {
-                geolocation.getCurrentPosition(
-                    (err) => {
-                        res.send(err.message)
-                    }, (position) => {
-                        lat = position.coords.latitude
-                        long = position.coords.longitude
-                    }
-                ) 
-                
-
-            }
-        
+    
         const snakeInputs = {
             commonName: req.body.commonName,
             scientificName: req.body.commonName,
@@ -100,7 +89,7 @@ controller.post('/', async (req, res)=> {
             description: req.body.description,
             location: {
                 type: 'Point',
-                coordinates:[ long, lat]
+                coordinates:[ req.body.longitude, req.body.latitude]
             },
             username: req.user.username
         }

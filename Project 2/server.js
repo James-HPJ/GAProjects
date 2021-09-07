@@ -13,6 +13,7 @@ const userController = require('./controllers/userController')
 const membersController = require('./controllers/membersController')
 const app = express()
 
+
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))

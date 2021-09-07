@@ -19,32 +19,23 @@ controller.post('/signup', (req, res) =>{
             res.redirect('/user/signup')
         } else {
             passport.authenticate('local')(req, res, ()=> {
-                res.redirect('/members')
+                res.redirect('/members/?login=success')
             })
         }
     })
 })
 
 controller.get('/login', (req, res) => {
-    res.render('users/login.ejs')
-})
-
-controller.post('/login', (req, res) =>{
-    const user = new User({
-        username: req.body.username,
-        password: req.body.password
-    })
-
-    req.login(user, (err)=> {
-        if(err){
-            console.log(err.message)
-        } else {
-            passport.authenticate('local')(req, res, ()=> {
-                res.redirect('/members')
-            })
-        }
+    const login = req.query.login
+    res.render('users/login.ejs', {
+        login
     })
 })
+
+controller.post('/login', passport.authenticate('local', { successRedirect: '/members/?login=success',
+failureRedirect: '/user/login/?login=fail',
+})
+)
 
 controller.get('/logout', (req, res) => {
     req.logout()
