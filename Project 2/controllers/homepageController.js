@@ -1,5 +1,7 @@
 const express = require("express");
+
 const snakesModel = require("../models/snakes");
+
 const controller = express.Router();
 
 controller.get('/', async (req, res)=> {
@@ -19,6 +21,10 @@ controller.get('/', async (req, res)=> {
     }
     
 
+})
+
+controller.get('/contactus', (req, res)=> {
+    res.render('webpages/contactus.ejs')
 })
 
 module.exports = controller

@@ -2,74 +2,71 @@
 
 <script>
 
-function initMap() {
-  map = new google.maps.Map(document.getElementById("map"), {
-    zoom:  10,
-    center: {
-        lat: 1.359634,
-        lng: 103.812619
-    },
-  });
+  function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+      zoom:  10,
+      center: {
+          lat: 1.359634,
+          lng: 103.812619
+      },
+    });
 
-  infoWindow = new google.maps.InfoWindow();
-  const locationButton = document.createElement("button");
-  locationButton.setAttribute('type', 'button');
-  locationButton.textContent = "Pan to Current Location";
-  locationButton.classList.add("custom-map-control-button");
-  map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-  locationButton.addEventListener("click", () => {
-    // Try HTML5 geolocation.
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          infoWindow.setPosition(pos);
-          infoWindow.setContent("Location found.");
-          infoWindow.open(map);
-          map.setCenter(pos);
-        },
-        () => {
-          handleLocationError(true, infoWindow, map.getCenter());
-        }
-      );
-    } else {
-      // Browser doesn't support Geolocation
-      handleLocationError(false, infoWindow, map.getCenter());
-    }
-  });
-}
+    infoWindow = new google.maps.InfoWindow();
+    const locationButton = document.createElement("button");
+    locationButton.setAttribute('type', 'button');
+    locationButton.textContent = "Pan to Current Location";
+    locationButton.classList.add("custom-map-control-button");
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+    locationButton.addEventListener("click", () => {
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+            infoWindow.setPosition(pos);
+            infoWindow.setContent("Location found.");
+            infoWindow.open(map);
+            map.setCenter(pos);
+          },
+          () => {
+            handleLocationError(true, infoWindow, map.getCenter());
+          }
+        );
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+      }
+    });
+  }
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(
-    browserHasGeolocation
-      ? "Error: The Geolocation service failed."
-      : "Error: Your browser doesn't support geolocation."
-  );
-  infoWindow.open(map);
-}
+  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(
+      browserHasGeolocation
+        ? "Error: The Geolocation service failed."
+        : "Error: Your browser doesn't support geolocation."
+    );
+    infoWindow.open(map);
+  }
 
-// (()=>{
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const currentLocationButton = document.querySelector('#currentLocationButton')
+        currentLocationButton.addEventListener('click', (e)=> {
+          document.querySelector('#latLabel').value = position.coords.latitude
+          document.querySelector('#longLabel').value = position.coords.longitude
+        })
 
-if(navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      const currentLocationButton = document.querySelector('#currentLocationButton')
-      currentLocationButton.addEventListener('click', (e)=> {
-        document.querySelector('#latLabel').value = position.coords.latitude
-        document.querySelector('#longLabel').value = position.coords.longitude
-      })
-
-    }, (error)=> {
-      console.log(error.message)
-    }) 
-    } else {
-      alert('We are unable to find your current position')
-    }
-// })()
+      }, (error)=> {
+        console.log(error.message)
+      }) 
+      } else {
+        alert('We are unable to find your current position')
+      }
 
 </script>
 
@@ -82,8 +79,7 @@ if(navigator.geolocation) {
         <a class="navbar-brand" href="/"><img src="https://lh3.googleusercontent.com/rIuzUNnL5VA7JqKS1Ahsk3Uxwde8aLVRO_p6VAIVWy4RGrvBzSetGYvaRPwDWvrGqhOUzC7e_28Ap0C43BYlVUBNFvEmI_Kd4wRxGR238qOHWWu77b6i21Gtk-uClrkOkiCJe_wJYA=w2400" alt="snakeLogo" class="homepageLogo"></a>
 
         <a class="navbar-brand ps-3" href="/">
-            <h2>Snakes of Singapore Society
-            </h2>
+            <h2>Snakes of Singapore Society</h2>
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,7 +94,7 @@ if(navigator.geolocation) {
                     <a class="nav-link" href="/user/logout">Logout</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact Us</a>
+                    <a class="nav-link" href="/contactus">Contact Us</a>
                 </li>
             </div>
         </div>

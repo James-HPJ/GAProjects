@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-
 const {Schema} = mongoose
 
 //Schema for point(location) on maps for nesting into main schema

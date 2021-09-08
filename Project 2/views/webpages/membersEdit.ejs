@@ -2,74 +2,72 @@
 
 <script>
 
-    function initMap() {
-      map = new google.maps.Map(document.getElementById("map"), {
-        zoom:  10,
-        center: {
-            lat: 1.359634,
-            lng: 103.812619
-        },
-      });
-    
-      infoWindow = new google.maps.InfoWindow();
-      const locationButton = document.createElement("button");
-      locationButton.setAttribute('type', 'button');
-      locationButton.textContent = "Pan to Current Location";
-      locationButton.classList.add("custom-map-control-button");
-      map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-      locationButton.addEventListener("click", () => {
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              const pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              };
-              infoWindow.setPosition(pos);
-              infoWindow.setContent("Location found.");
-              infoWindow.open(map);
-              map.setCenter(pos);
-            },
-            () => {
-              handleLocationError(true, infoWindow, map.getCenter());
-            }
-          );
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
-        }
-      });
-    }
-    
-    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-      infoWindow.setPosition(pos);
-      infoWindow.setContent(
-        browserHasGeolocation
-          ? "Error: The Geolocation service failed."
-          : "Error: Your browser doesn't support geolocation."
-      );
-      infoWindow.open(map);
-    }
-    
-    // (()=>{
-    
-    if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const currentLocationButton = document.querySelector('#currentLocationButton')
-          currentLocationButton.addEventListener('click', (e)=> {
-            document.querySelector('#latLabel').value = position.coords.latitude
-            document.querySelector('#longLabel').value = position.coords.longitude
-          })
-    
-        }, (error)=> {
-          console.log(error.message)
-        }) 
-        } else {
-          alert('We are unable to find your current position')
-        }
-    // })()
+  function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+      zoom:  10,
+      center: {
+          lat: 1.359634,
+          lng: 103.812619
+      },
+    });
+  
+    infoWindow = new google.maps.InfoWindow();
+    const locationButton = document.createElement("button");
+    locationButton.setAttribute('type', 'button');
+    locationButton.textContent = "Pan to Current Location";
+    locationButton.classList.add("custom-map-control-button");
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+    locationButton.addEventListener("click", () => {
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+            infoWindow.setPosition(pos);
+            infoWindow.setContent("Location found.");
+            infoWindow.open(map);
+            map.setCenter(pos);
+          },
+          () => {
+            handleLocationError(true, infoWindow, map.getCenter());
+          }
+        );
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+      }
+    });
+  }
+  
+  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(
+      browserHasGeolocation
+        ? "Error: The Geolocation service failed."
+        : "Error: Your browser doesn't support geolocation."
+    );
+    infoWindow.open(map);
+  }
+  
+  
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const currentLocationButton = document.querySelector('#currentLocationButton')
+        currentLocationButton.addEventListener('click', (e)=> {
+          document.querySelector('#latLabel').value = position.coords.latitude
+          document.querySelector('#longLabel').value = position.coords.longitude
+        })
+  
+      }, (error)=> {
+        console.log(error.message)
+      }) 
+      } else {
+        alert('We are unable to find your current position')
+      }
     
     </script>
     
@@ -98,7 +96,7 @@
                         <a class="nav-link" href="/user/logout">Logout</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact Us</a>
+                        <a class="nav-link" href="/contactus">Contact Us</a>
                     </li>
                 </div>
             </div>
@@ -146,7 +144,36 @@
                 <input type="submit" class="btn btn-primary mb-3" value="Update Snake" />
               </div>
             </form>
+
+            <form method="POST" action="/members/<%= selectedSnake.id %>?_method=DELETE">
+              <div>
+                <input type="button" class="btn btn-danger mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal" value="Delete Snake" />
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure you want to delete <%= selectedSnake.scientificName %>? 
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-danger">Yes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          
+
           </div>
+
+
     
           <script
         src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.MAPKEY %>&callback=initMap&libraries=&v=weekly"

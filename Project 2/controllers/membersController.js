@@ -1,13 +1,11 @@
 const express = require("express");
-const snakesModel = require("../models/snakes");
-const comments = require("../models/comments")
 const controller = express.Router();
 
+const snakesModel = require("../models/snakes");
+const comments = require("../models/comments")
 
 const multer = require("multer");
 
-// it allows you to choose different storages (disk or memory). Disk is basically on your local harddrive.
-// It provides you a couple of functions, one is for choosing the destination, where you want to upload, the other one for defining the filename for the uploaded file
 const diskStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./public/images/");
@@ -17,12 +15,12 @@ const diskStorage = multer.diskStorage({
   }
 })
 
-// after you setup multer to choose your disk storage, you can initialize a middleware to use for your routes
 const uploadMiddleware = multer({ storage: diskStorage });
 
-// in our case we are using multer in our all routes, this will automatically upload any file where the input name is featuredImage
 controller.use(uploadMiddleware.single("img"));
 
+
+//index route
 controller.get('/', async (req, res)=> {
 
     try {
@@ -33,6 +31,8 @@ controller.get('/', async (req, res)=> {
 
         const login = req.query.login
 
+        const destroy = req.query.delete 
+
         const user = req.user.username
 
         if( req.isAuthenticated() ){
@@ -40,7 +40,8 @@ controller.get('/', async (req, res)=> {
             {
                 snakes,
                 login,
-                user
+                user,
+                destroy
             })
         }
        } catch(error){
@@ -48,6 +49,7 @@ controller.get('/', async (req, res)=> {
     }
 })
 
+//new route
 controller.get('/new', async (req, res)=> {
     if( req.isAuthenticated() ){
         res.render('webpages/membersNew.ejs')
@@ -80,7 +82,7 @@ controller.get('/:id', async (req, res)=> {
 })
 
 
-
+//create route - for new snakes
 controller.post('/', async (req, res)=> {
     try {
     
@@ -106,6 +108,7 @@ controller.post('/', async (req, res)=> {
 
 })
 
+//create route - for new comments
 controller.post('/:id', async (req, res)=> {
     try {
         const commentInputs = {
@@ -123,6 +126,7 @@ controller.post('/:id', async (req, res)=> {
     }
 })
 
+//edit route
 controller.get('/:id/edit', async( req, res)=> {
     try {
         const selectedSnake = await snakesModel.findById(req.params.id)
@@ -139,6 +143,7 @@ controller.get('/:id/edit', async( req, res)=> {
     }
 })
 
+//update route
 controller.put('/:id', async (req, res)=> {
     try {
 
@@ -149,13 +154,17 @@ controller.put('/:id', async (req, res)=> {
             const snakeInputs = {
                 commonName: req.body.commonName,
                 scientificName: req.body.commonName,
-                img: `images/${req.file.filename}`,
                 dateFound: new Date(req.body.dateFound),
                 description: req.body.description,
                 location: {
                     type: 'Point',
                     coordinates:[ req.body.longitude, req.body.latitude]
                 },
+            }
+
+            if(req.file) {
+                const image = req.file.filename
+                snakeInputs.img = `images/${image}`
             }
     
             await snakesModel.updateOne({
@@ -172,5 +181,23 @@ controller.put('/:id', async (req, res)=> {
     }
 
 })
+
+//destroy route
+controller.delete("/:id", async (req, res) => {
+    
+    const selectedSnake = await snakesModel.findById(req.params.id)
+
+    if(req.user.username === selectedSnake.username ){
+
+    await snakesModel.deleteOne({
+      _id: req.params.id
+    });
+  
+    res.redirect(`/members/?delete=success`);
+     } else {
+        res.redirect(`/members?delete=fail`)
+    }
+});
+  
 
 module.exports = controller

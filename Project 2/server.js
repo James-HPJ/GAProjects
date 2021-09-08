@@ -27,7 +27,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-const mongoURI = 'mongodb://localhost:27017/snakesdb'
+const mongoURI = `mongodb+srv://James_admin:${process.env.MONGOPW}@james-mongodb.mcnpc.mongodb.net/snakesDB`
 const dbConnection = mongoose.connection
 
 
@@ -55,7 +55,7 @@ app.use(seedingController)
 
 
 
-const server = app.listen(3000)
+const server = app.listen(process.env.PORT || 3000)
 
 process.on('SIGTERM', () => {
   console.log('My process is exiting')
