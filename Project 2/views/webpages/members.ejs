@@ -46,13 +46,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 pe-5">
                     <li class="nav-item">
-                        <a class="nav-link" href="/members/new">Submit Entry</a>
+                        <a class="nav-link" href="/members/new">SubmitEntry</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/user/logout">Logout</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/contactus">Contact Us</a>
+                        <a class="nav-link" href="/contactus">ContactUs</a>
                     </li>
                 </ul>
             </div>
@@ -109,8 +109,11 @@
                     <div id="map"></div>
                 </div>
             </div>
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.MAPKEY %>&callback=initMap&libraries=&v=weekly"
-        async></script>
-</div>
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.MAPKEY %>&callback=initMap&libraries=&v=weekly"
+            async></script>
+    </div>
+
+    <div class="my-4" style="text-align: center;">Images & Illustrations <span>&copy;</span> <a href="https://www.canlaken.com" title="www.canlaken.com">www.canlaken.com</a> by Kenneth Chin </div>
+
 <%- include("../partials/footer.ejs") %>

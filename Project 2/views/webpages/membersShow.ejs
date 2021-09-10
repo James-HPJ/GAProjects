@@ -51,14 +51,14 @@
                     <a class="nav-link" href="/members/<%= selectedSnake.id %>/edit">Edit</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/contactus">Contact Us</a>
+                    <a class="nav-link" href="/contactus">ContactUs</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<div class="container my-5">
+<div class="container">
     <% if (edit === 'success') { %>
         <div class="row">
           <div class="alert alert-success" role="alert">
@@ -72,28 +72,28 @@
             </div>
           </div> 
     <% } %>
-    <h3 class="mb-3"><%= selectedSnake.commonName %></h3>
-    <div class="row  my-3">
-        <div class="col col-lg-6">
-            <% if(selectedSnake.img.charAt(0) == 'i'){ %>
-                <img src="/<%= selectedSnake.img %>" alt="snake img" class="selectedSnakeImg ">
-            <% } else {%>
-                <img src="<%= selectedSnake.img %>" alt="snake img" class="selectedSnakeImg ">
-            <% } %>
-        </div>
-
-        <div class="col col-lg-6">
-            <h4><img src="/vectors/snake.png" alt="snake vector" class="vectors pr-3"><%= selectedSnake.scientificName %></h4>
-            <h4><img src="/vectors/product-description.png" alt="description vector" class="vectors"><%= selectedSnake.description %></h4>
-            <h4><img src="/vectors/calendar.png" alt="calendar vector" class="vectors"><%= selectedSnake.dateFound.toDateString() %></h4>
-            <h4><img src="/vectors/user.png" alt="user vector" class="vectors"><%= selectedSnake.username %></h4>
-            
-        </div>
-
-    </div>
 </div>
 
+<div class="container my-5 p-4">
+    <div class="jumbotron">
+        <h1 class="display-4 my-3"><%= selectedSnake.commonName %></h1>
 
+        <% if(selectedSnake.img.charAt(0) == 'i'){ %>
+            <img src="/<%= selectedSnake.img %>" alt="snake img" class="selectedSnakeImg ">
+        <% } else {%>
+            <img src="<%= selectedSnake.img %>" alt="snake img" class="selectedSnakeImg ">
+        <% } %>
+
+        <p class="lead mt-3"><img src="/vectors/snake.png" alt="snake vector" class="vectors pr-3"><%= selectedSnake.scientificName %></p>
+        <p class="lead"><img src="/vectors/calendar.png" alt="calendar vector" class="vectors"><%= selectedSnake.dateFound.toDateString() %></p>
+        <p class="lead"><img src="/vectors/user.png" alt="user vector" class="vectors"><%= selectedSnake.username %></p>
+        <hr class="my-4">
+        <p class="my-3"><img src="/vectors/product-description.png" alt="description vector" class="vectors"><%= selectedSnake.description %></p>
+        <a class="btn btn-primary btn-lg" href="/members/<%= selectedSnake.id %>/edit" role="button">Edit Snake</a>
+        <p>*For original author only</p>
+      </div>
+
+</div>
 
 <div class="container-fluid">
     <div class="col snake-map mx-5 my-5">
@@ -142,6 +142,10 @@
         </div>
     </div>
 </div>
+
+<div class="my-4" style="text-align: center;">Images & Illustrations <span>&copy;</span> <a href="https://www.canlaken.com" title="www.canlaken.com">www.canlaken.com</a> by Kenneth Chin </div>
+
+<div class="my-4" style="text-align: center;">Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 
 
 

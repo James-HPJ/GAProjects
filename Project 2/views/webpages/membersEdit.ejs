@@ -96,13 +96,13 @@
                         <a class="nav-link" href="/user/logout">Logout</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/contactus">Contact Us</a>
+                        <a class="nav-link" href="/contactus">ContactUs</a>
                     </li>
                 </div>
             </div>
         </nav>
     
-        <div class="container">
+        <div class="container my-5 bg-success p-4">
           <% const snakeISOString = new Date(selectedSnake.dateFound).toISOString() %>
             <h2>Edit Snake Profile: <%= selectedSnake.scientificName %> </h2>
             <form method="POST" action="/members/<%= selectedSnake.id %>?_method=PUT" enctype="multipart/form-data">

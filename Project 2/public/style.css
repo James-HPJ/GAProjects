@@ -1,6 +1,10 @@
-.navbar {
-
-    font-family: 'Montserrat', sans-serif;
+body {
+    background-image:url('./images/desk1.jpg') ;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size:cover ;
+    color: #ebebeb;
+    font-family: 'Lato', sans-serif;
 }
 
 .homepageLogo {
@@ -8,9 +12,18 @@
     width: 100px;
 }
 
+.jumbotron {
+    text-align: center;
+}
+
 .snakeImg {
     border-radius: 20%;
     width: 300px;
+}
+
+.selectedSnakeImg {
+    border-radius: 20%;
+    width: 400px;
 }
 
 .snakes {
@@ -58,3 +71,7 @@
   .custom-map-control-button:hover {
     background: #ebebeb;
   }
+
+  /* .userForm {
+    background-color:seagreen
+  } */
