@@ -79,9 +79,9 @@
         <h1 class="display-4 my-3"><%= selectedSnake.commonName %></h1>
 
         <% if(selectedSnake.img.charAt(0) == 'i'){ %>
-            <img src="/<%= selectedSnake.img %>" alt="snake img" class="selectedSnakeImg ">
+            <img src="/<%= selectedSnake.img %>" alt="snake img" class="selectedSnakeImg img-fluid ">
         <% } else {%>
-            <img src="<%= selectedSnake.img %>" alt="snake img" class="selectedSnakeImg ">
+            <img src="<%= selectedSnake.img %>" alt="snake img" class="selectedSnakeImg img-fluid ">
         <% } %>
 
         <p class="lead mt-3"><img src="/vectors/snake.png" alt="snake vector" class="vectors pr-3"><%= selectedSnake.scientificName %></p>
@@ -120,7 +120,7 @@
                         </form>
                         <div class="clearfix"></div>
                         <hr>
-                        <ul class="media-list">
+                        <ul class="media-list bg-dark">
                             <% commentsForSnake.forEach(comment => { %>
                             <li class="media">
                                 <div class="media-body">
