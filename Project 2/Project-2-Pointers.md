@@ -15,6 +15,7 @@ A digital repository for logging Snake info/profiles in their natural habitats
 - CRUD
 - Authentication (passport)
 - google maps api
+- comment box
 
 ## Technical Details
 - Authentication (passport)
