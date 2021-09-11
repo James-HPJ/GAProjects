@@ -1,0 +1,150 @@
+<%- include("../partials/header.ejs") %>
+
+<script>
+
+  function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+      zoom:  10,
+      center: {
+          lat: 1.359634,
+          lng: 103.812619
+      },
+    });
+
+    infoWindow = new google.maps.InfoWindow();
+    const locationButton = document.createElement("button");
+    locationButton.setAttribute('type', 'button');
+    locationButton.textContent = "Pan to Current Location";
+    locationButton.classList.add("custom-map-control-button");
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+    locationButton.addEventListener("click", () => {
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+            infoWindow.setPosition(pos);
+            infoWindow.setContent("Location found.");
+            infoWindow.open(map);
+            map.setCenter(pos);
+          },
+          () => {
+            handleLocationError(true, infoWindow, map.getCenter());
+          }
+        );
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+      }
+    });
+  }
+
+  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(
+      browserHasGeolocation
+        ? "Error: The Geolocation service failed."
+        : "Error: Your browser doesn't support geolocation."
+    );
+    infoWindow.open(map);
+  }
+
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const currentLocationButton = document.querySelector('#currentLocationButton')
+        currentLocationButton.addEventListener('click', (e)=> {
+          document.querySelector('#latLabel').value = position.coords.latitude
+          document.querySelector('#longLabel').value = position.coords.longitude
+        })
+
+      }, (error)=> {
+        console.log(error.message)
+      }) 
+      } else {
+        alert('We are unable to find your current position')
+      }
+
+</script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light row bg-success bg-opacity-75 p-2 sticky-top ">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/"><img src="https://lh3.googleusercontent.com/rIuzUNnL5VA7JqKS1Ahsk3Uxwde8aLVRO_p6VAIVWy4RGrvBzSetGYvaRPwDWvrGqhOUzC7e_28Ap0C43BYlVUBNFvEmI_Kd4wRxGR238qOHWWu77b6i21Gtk-uClrkOkiCJe_wJYA=w2400" alt="snakeLogo" class="homepageLogo"></a>
+
+        <a class="navbar-brand ps-3" href="/members">
+            <h2>Snakes of Singapore Society - Members</h2>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 pe-5">
+              <li class="nav-item">
+                  <a class="nav-link" href="/members">Members'Page</a>
+              </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/logout">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contactus">ContactUs</a>
+                </li>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5 p-4 bg-success">
+        <h2>Create a snake</h2>
+        <form method="POST" action="/members" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="commonName" class="form-label">Common Name:</label>
+            <input type="text" name="commonName" class="form-control" />
+          </div>        
+          <div class="mb-3">
+            <label for="scientificName" class="form-label">Scientific Name:</label>
+            <input type="text" name="scientificName" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="img" class="form-label">Specimen Image:</label>
+            <input type="file" name="img" class="form-control" accept="image/*"/>
+          </div>
+          <div class="mb-3">
+            <label for="dateFound" class="form-label">Date:</label>
+            <input type="datetime-local" name="dateFound" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <input type="text" name="description" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="latitude" class="form-label" >location-latitude:</label>
+            <input type="text" name="latitude" class="form-control" id="latLabel"></input>
+          </div>        
+          <div class="mb-3">
+            <label for="longitude" class="form-label" >location-longitude:</label>
+            <input type="text" name="longitude" class="form-control" id="longLabel"></input>
+          </div>
+          <div class="mb-3">
+              <button type="button" id="currentLocationButton">Use current location</button>
+          </div>
+            <div class="col my-5">
+                <div id="map"></div>
+            </div>
+          <div>
+            <input type="submit" class="btn btn-primary mb-3" value="Create new Snake" />
+          </div>
+        </form>
+      </div>
+
+      <script
+    src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.MAPKEY %>&callback=initMap&libraries=&v=weekly"
+    async></script>
+
+    <%- include("../partials/footer.ejs") %>

@@ -1,0 +1,89 @@
+<%- include("../partials/header.ejs") %>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light row bg-success bg-opacity-75 p-2 sticky-top ">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/"><img src="https://lh3.googleusercontent.com/rIuzUNnL5VA7JqKS1Ahsk3Uxwde8aLVRO_p6VAIVWy4RGrvBzSetGYvaRPwDWvrGqhOUzC7e_28Ap0C43BYlVUBNFvEmI_Kd4wRxGR238qOHWWu77b6i21Gtk-uClrkOkiCJe_wJYA=w2400" alt="snakeLogo" class="homepageLogo"></a>
+
+        <a class="navbar-brand ps-3" href="/">
+            <h2>Snakes of Singapore Society
+            </h2>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 pe-5">
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/signup">Signup</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contactus">ContactUs</a>
+                </li>
+            </div>
+        </div>
+    </nav>
+
+  <div class="container my-5">
+    <div id="snakeCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#snakeCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#snakeCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#snakeCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <% for(let i = 0; i < snakes.length; i++){
+              if(i===0){ %>
+                <div class="carousel-item active">
+                    <img src="<%= snakes[i].img %>" class="d-block w-100" alt="snakeImg">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5><%= snakes[i].commonName %></h5>
+                      <p><%= snakes[i].description %></p>
+                    </div>
+                  </div>
+              <% } else { %>
+                <div class="carousel-item">
+                    <img src="<%= snakes[i].img %>" class="d-block w-100" alt="snakeImg">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5><%= snakes[i].commonName %></h5>
+                      <p><%= snakes[i].description %></p>
+                    </div>
+                  </div>
+              <% } 
+          } %>
+        
+        <button class="carousel-control-prev" type="button" data-bs-target="#snakeCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#snakeCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="p-5 mb-4 bg-secondary rounded-3">
+      <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">About Us</h1>
+        <p class="col-md-8 fs-4">A Group of Snake enthusiasts, Snakes of Singapore Society is dedicated towards the conservation for the species and active education to all members. If
+          documenting specimens in their natural habitat is right up your alley, don't hesitate to join our community!
+        </p>
+        <a class="btn-success btn-lg" href="/user/signup" role="button">Join Now!</a>
+      </div>
+    </div>
+    
+  </div>
+
+
+  <div class="my-4" style="text-align: center;">Images & Illustrations <span>&copy;</span> <a href="https://www.canlaken.com" title="www.canlaken.com">www.canlaken.com</a> by Kenneth Chin </div>
+
+
+<%- include("../partials/footer.ejs") %>
