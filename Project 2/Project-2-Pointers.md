@@ -6,8 +6,8 @@ A digital repository for logging Snake info/profiles in their natural habitats
 ## Story behind the App
 
 - SCUBA diving to see marinelife
-- Observe that collated data on marine animals is sparse and unorganized
-- focus on snakes for app due to feasibility
+- Observed that collated data on marine animals is sparse and unorganized
+- focused on snakes for app due to feasibility
 - cut down equipment for logging (e.g. logbooks, pen, separate camera, GPS locator)
 - just need a mobile
 
