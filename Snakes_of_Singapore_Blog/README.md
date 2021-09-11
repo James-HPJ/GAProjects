@@ -1,5 +1,5 @@
 # Snakes of Singapore Blog (S.S.S)
-[http://snake-blog.herokuapp.com/](http://snake-blog.herokuapp.com/)
+[https://snake-blog.herokuapp.com/](http://snake-blog.herokuapp.com/)
 
 A digital repository for logging Snake info/profiles in their natural habitats
 
