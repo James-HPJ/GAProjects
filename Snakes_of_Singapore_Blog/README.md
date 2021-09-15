@@ -17,6 +17,9 @@ Logging information on snakes specimen in the midst of thick vegetation can be s
 * [Why the need for a snake respository?](#Why)
 * [How to Use](#How-to-Use)
 * [Project status](#Project-status)
+* [Technical Challenges](#challenges)
+* [Improvements to be made](#improvements)
+* [Lessons Learnt](#lessons)
 * [Credits](#Credits)
 * [Other Info](#Other-Info)
 * [License](#license)
@@ -40,6 +43,22 @@ All functions are accessible to registered users only.
 ## Project status
 
 This blog is just starting out, so contributions and entries are welcomed! We hope to build on our snake data as much and as quickly as we can.
+
+## Technical Challenges
+- some elements work only on client side (Google Maps)
+- figuring out how to use passport strategies 
+- color themes and ensuring readability of site
+
+## Improvements to be made
+- better use of passport (flash messages, FB login)
+- geocoding of location based on street name, zip
+- establishing relationships between Collections
+
+## Lessons Learnt
+- using new technologies (passport, googlemaps, google login)
+- using bootstrap components (carousel, jumbotron, modal)
+- prioritising the requirements of the project
+- need to understand requirements/difficulty of technologies before using them
 
 ## Credits
 
