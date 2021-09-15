@@ -18,7 +18,7 @@ A digital repository for logging Snake info/profiles in their natural habitats
 - comment box
 
 ## Technical Details
-- Authentication (passport)
+- Authentication (passport, google Oauth2.0)
 - google maps api
 - how the schemas models interact 
 - bootstrap elements
@@ -31,7 +31,7 @@ A digital repository for logging Snake info/profiles in their natural habitats
 - color themes and ensuring readability of site
 
 ## Improvements to be made
-- better use of passport (flash messages, google/FB login)
+- better use of passport (flash messages, FB login)
 - geocoding of location based on street name, zip
 - establishing relationships between Collections
 
