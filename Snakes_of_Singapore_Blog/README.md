@@ -17,11 +17,10 @@ Logging information on snakes specimen in the midst of thick vegetation can be s
 * [Why the need for a snake respository?](#Why)
 * [How to Use](#How-to-Use)
 * [Project status](#Project-status)
-* [Technical Challenges](#challenges)
-* [Improvements to be made](#improvements)
-* [Lessons Learnt](#lessons)
+* [Technical Challenges](#technical-challenges)
+* [Improvements to be made](#improvements-to-be-made)
+* [Lessons Learnt](#lessons-learnt)
 * [Credits](#Credits)
-* [Other Info](#Other-Info)
 * [License](#license)
 
 ## Why the need for a snake respository?
