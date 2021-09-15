@@ -5,6 +5,12 @@ const methodOverride = require('method-override')
 const session = require('express-session');
 const passport = require("passport");
 
+//to require for Google Oauth 2.0
+const GoogleStrategy = require('passport-google-oauth20').Strategy
+
+//the findOrCreate function is required to find/create google logins into the website
+const findOrCreate = require('mongoose-findorcreate')
+
 const User = require('./models/users')
 
 const homepageController = require('./controllers/homepageController')
@@ -41,9 +47,29 @@ dbConnection.on('disconnected', () => console.log('Database is disconnected'))
 
 passport.use(User.createStrategy())
 
-passport.serializeUser(User.serializeUser())
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
 
-passport.deserializeUser(User.deserializeUser())
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+//google login strategy
+passport.use(new GoogleStrategy({
+  clientID: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
+  callbackURL: 'https://snake-blog.herokuapp.com/user/auth/google/members',
+  userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
+},
+function(accessToken, refreshToken, profile, cb) {
+  User.findOrCreate({ googleId: profile.id }, function (err, user) {
+    return cb(err, user);
+  });
+}
+));
 
 
 app.use(homepageController);

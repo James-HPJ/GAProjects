@@ -11,6 +11,16 @@ controller.get('/signup', (req, res) => {
     res.render('users/signup.ejs')
 })
 
+controller.get('/auth/google',
+    passport.authenticate('google', { scope: ['profile'] } ))
+
+controller.get('/auth/google/members', 
+passport.authenticate('google', { failureRedirect: '/user/login' }),
+function(req, res) {
+    // Successful authentication, redirect members home.
+    res.redirect('/members/?login=success');
+});
+
 controller.post('/signup', (req, res) =>{
 
      User.register(new User({username: req.body.username}), req.body.password, (err, user)=> {
