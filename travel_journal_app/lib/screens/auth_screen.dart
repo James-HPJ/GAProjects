@@ -37,7 +37,7 @@ class _AuthScreenState extends State<AuthScreen> {
             .doc(userCredential.user.uid)
             .set({
           'username': username,
-          'dateJoined': DateFormat('yMMMMd').format(DateTime.now()),
+          'dateJoined': DateFormat('yMMMd').format(DateTime.now()),
         });
       }
     } on PlatformException catch (error) {

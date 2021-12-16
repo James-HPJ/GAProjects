@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travel_journal_app/screens/add_journal_screen.dart';
+import 'package:travel_journal_app/widgets/home_screen/drop_down_menu.dart';
 import 'package:travel_journal_app/widgets/journal_carousel.dart';
 import 'package:travel_journal_app/widgets/food_carousel.dart';
 import 'package:travel_journal_app/widgets/people_carousel.dart';
@@ -46,58 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: DropdownButton(
-              icon: Icon(Icons.more_vert),
-              items: [
-                DropdownMenuItem(
-                  child: Container(
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.exit_to_app,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text('Logout')
-                      ],
-                    ),
-                  ),
-                  value: 'logout',
-                ),
-                DropdownMenuItem(
-                  child: Container(
-                    child: Row(
-                      children: [
-                        Icon(
-                          FontAwesomeIcons.plusCircle,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text('Add Journal')
-                      ],
-                    ),
-                  ),
-                  value: 'addjournal',
-                ),
-              ],
-              onChanged: (value) {
-                if (value == 'logout') {
-                  FirebaseAuth.instance.signOut();
-                }
-                if (value == 'addjournal') {
-                  Navigator.of(context).pushNamed(AddJournalScreen.routeName);
-                }
-              },
-            ),
-          ),
-        ],
+        actions: [DropDownMenu()],
         title: const Text('My Travel Journeys'),
       ),
       body: Column(

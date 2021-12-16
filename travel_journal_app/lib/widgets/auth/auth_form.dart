@@ -98,7 +98,7 @@ class _AuthFormState extends State<AuthForm> {
                   if (!widget.isLoading)
                     ElevatedButton(
                       onPressed: _submitForm,
-                      child: const Text('Login'),
+                      child: Text(_isLogin ? 'Login' : 'Signup'),
                     ),
                   if (!widget.isLoading)
                     TextButton(
@@ -107,8 +107,8 @@ class _AuthFormState extends State<AuthForm> {
                           _isLogin = !_isLogin;
                         });
                       },
-                      child: const Text(
-                        'Create New Account',
+                      child: Text(
+                        _isLogin ? 'Create New Account' : 'I have an Account',
                       ),
                     ),
                 ],

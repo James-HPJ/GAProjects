@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:travel_journal_app/models/journal.dart';
-import '../models/journal_entry.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_format/date_format.dart';
+// import 'package:provider/provider.dart';
+// import 'package:travel_journal_app/models/journal.dart';
+// import '../models/journal_entry.dart';
 
 class AddJournalScreen extends StatefulWidget {
   static const routeName = '/add-journal';
@@ -10,53 +13,89 @@ class AddJournalScreen extends StatefulWidget {
 }
 
 class _AddJournalScreenState extends State<AddJournalScreen> {
+  final userId = FirebaseAuth.instance.currentUser.uid;
   bool isLoading = false;
   final _form = GlobalKey<FormState>();
 
   final _cityFocusNode = FocusNode();
-  final _purposeFocusNode = FocusNode();
-  final _inAPhraseFocusNode = FocusNode();
+  final _travelReasonFocusNode = FocusNode();
+  final _descriptionFocusNode = FocusNode();
   final _startDateFocusNode = FocusNode();
-  final _imageFocusNode = FocusNode();
-  final _imageUrlController = TextEditingController();
+  final _mainPicFocusNode = FocusNode();
+  final _mainPicController = TextEditingController();
+
+  var _city;
+  var _travelReason;
+  var _description;
+  DateTime _startDate;
+  var _mainPic;
+  var _country;
+  DateTime _endDate;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _imageFocusNode.addListener(_updateImageUrl);
+    _mainPicFocusNode.addListener(_updateImageUrl);
   }
 
   void _updateImageUrl() {
-    if (!_imageFocusNode.hasFocus) {
+    if (!_mainPicFocusNode.hasFocus) {
       setState(() {});
     }
   }
 
-  void _saveForm() {
+  void _saveForm() async {
     setState(() {
       isLoading = true;
     });
-    _form.currentState.save();
-    print(_newProduct.profilePic);
-    Provider.of<Journals>(context, listen: false).addJournalEntry(_newProduct);
 
-    setState(() {
-      isLoading = false;
-    });
+    final isValid = _form.currentState.validate();
+    FocusScope.of(context).unfocus();
 
-    Navigator.of(context).pop;
+    if (isValid) {
+      try {
+        _form.currentState.save();
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .collection('journals')
+            .add({
+          'city': _city,
+          'country': _country,
+          'travelReason': _travelReason,
+          'description': _description,
+          'mainPic': _mainPic,
+          'startDate': formatDate(_startDate, [mm, '-', dd, '-', yyyy]),
+          'endDate': formatDate(_endDate, [mm, '-', dd, '-', yyyy]),
+          'createdAt': Timestamp.now(),
+        });
+
+        setState(() {
+          isLoading = false;
+        });
+
+        Navigator.pop(context);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.message),
+            backgroundColor: Theme.of(context).errorColor,
+          ),
+        );
+      }
+    }
   }
 
   // ignore: prefer_final_fields
-  var _newProduct = Journal(
-      profilePic: '',
-      country: '',
-      city: '',
-      startDate: null,
-      endDate: null,
-      purpose: '',
-      inAPhrase: '');
+  // var _newProduct = Journal(
+  //     profilePic: '',
+  //     country: '',
+  //     city: '',
+  //     startDate: null,
+  //     endDate: null,
+  //     purpose: '',
+  //     inAPhrase: '');
 
   @override
   Widget build(BuildContext context) {
@@ -84,14 +123,7 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
                     Focus.of(context).requestFocus(_cityFocusNode);
                   },
                   onSaved: (value) {
-                    _newProduct = Journal(
-                        profilePic: _newProduct.profilePic,
-                        country: value,
-                        city: _newProduct.city,
-                        startDate: _newProduct.startDate,
-                        endDate: _newProduct.endDate,
-                        purpose: _newProduct.purpose,
-                        inAPhrase: _newProduct.inAPhrase);
+                    _country = value;
                   },
                   validator: (value) {
                     if (value.isEmpty) {
@@ -105,17 +137,10 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
                   textInputAction: TextInputAction.next,
                   focusNode: _cityFocusNode,
                   onFieldSubmitted: (_) {
-                    Focus.of(context).requestFocus(_purposeFocusNode);
+                    Focus.of(context).requestFocus(_travelReasonFocusNode);
                   },
                   onSaved: (value) {
-                    _newProduct = Journal(
-                        profilePic: _newProduct.profilePic,
-                        country: _newProduct.country,
-                        city: value,
-                        startDate: _newProduct.startDate,
-                        endDate: _newProduct.endDate,
-                        purpose: _newProduct.purpose,
-                        inAPhrase: _newProduct.inAPhrase);
+                    _city = value;
                   },
                   validator: (value) {
                     if (value.isEmpty) {
@@ -125,21 +150,15 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
                   },
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Purpose'),
+                  decoration:
+                      const InputDecoration(labelText: 'Reason for Travel'),
                   textInputAction: TextInputAction.next,
-                  focusNode: _purposeFocusNode,
+                  focusNode: _travelReasonFocusNode,
                   onFieldSubmitted: (_) {
-                    Focus.of(context).requestFocus(_inAPhraseFocusNode);
+                    Focus.of(context).requestFocus(_descriptionFocusNode);
                   },
                   onSaved: (value) {
-                    _newProduct = Journal(
-                        profilePic: _newProduct.profilePic,
-                        country: _newProduct.country,
-                        city: _newProduct.city,
-                        startDate: _newProduct.startDate,
-                        endDate: _newProduct.endDate,
-                        purpose: value,
-                        inAPhrase: _newProduct.inAPhrase);
+                    _travelReason = value;
                   },
                   validator: (value) {
                     if (value.isEmpty) {
@@ -149,21 +168,15 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
                   },
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'In a Phrase'),
+                  decoration:
+                      const InputDecoration(labelText: 'Description of Trip'),
                   textInputAction: TextInputAction.next,
-                  focusNode: _inAPhraseFocusNode,
+                  focusNode: _descriptionFocusNode,
                   onFieldSubmitted: (_) {
                     Focus.of(context).requestFocus(_startDateFocusNode);
                   },
                   onSaved: (value) {
-                    _newProduct = Journal(
-                        profilePic: _newProduct.profilePic,
-                        country: _newProduct.country,
-                        city: _newProduct.city,
-                        startDate: _newProduct.startDate,
-                        endDate: _newProduct.endDate,
-                        purpose: _newProduct.purpose,
-                        inAPhrase: value);
+                    _description = value;
                   },
                   validator: (value) {
                     if (value.isEmpty) {
@@ -173,20 +186,14 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
                   },
                 ),
                 InputDatePickerFormField(
+                  fieldHintText: 'dd-mm-yyyy',
                   errorInvalidText: 'Pls enter a valid Date',
                   errorFormatText: 'Pls enter a correct Date Format',
                   fieldLabelText: 'Start Date',
                   firstDate: DateTime(2000),
                   lastDate: DateTime.now(),
                   onDateSaved: (value) {
-                    _newProduct = Journal(
-                        profilePic: _newProduct.profilePic,
-                        country: _newProduct.country,
-                        city: _newProduct.city,
-                        startDate: value,
-                        endDate: _newProduct.endDate,
-                        purpose: _newProduct.purpose,
-                        inAPhrase: _newProduct.inAPhrase);
+                    _startDate = value;
                   },
                 ),
                 InputDatePickerFormField(
@@ -196,14 +203,7 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
                   firstDate: DateTime(2000),
                   lastDate: DateTime.now(),
                   onDateSaved: (value) {
-                    _newProduct = Journal(
-                        profilePic: _newProduct.profilePic,
-                        country: _newProduct.country,
-                        city: _newProduct.city,
-                        startDate: _newProduct.startDate,
-                        endDate: value,
-                        purpose: _newProduct.purpose,
-                        inAPhrase: _newProduct.inAPhrase);
+                    _endDate = value;
                   },
                 ),
                 Row(
@@ -216,10 +216,10 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
                       decoration: BoxDecoration(
                         border: Border.all(width: 2, color: Colors.grey),
                       ),
-                      child: _imageUrlController.text.isEmpty
+                      child: _mainPicController.text.isEmpty
                           ? Text('Enter a URL')
                           : FittedBox(
-                              child: Image.network(_imageUrlController.text),
+                              child: Image.network(_mainPicController.text),
                               fit: BoxFit.cover,
                             ),
                     ),
@@ -229,17 +229,10 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
                             const InputDecoration(labelText: 'Image URL'),
                         keyboardType: TextInputType.url,
                         textInputAction: TextInputAction.done,
-                        controller: _imageUrlController,
-                        focusNode: _imageFocusNode,
+                        controller: _mainPicController,
+                        focusNode: _mainPicFocusNode,
                         onSaved: (value) {
-                          _newProduct = Journal(
-                              profilePic: value,
-                              country: _newProduct.country,
-                              city: _newProduct.city,
-                              startDate: _newProduct.startDate,
-                              endDate: _newProduct.endDate,
-                              purpose: _newProduct.purpose,
-                              inAPhrase: _newProduct.inAPhrase);
+                          _mainPic = value;
                         },
                         onFieldSubmitted: (_) {
                           _saveForm();
