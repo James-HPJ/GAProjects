@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_journal_app/widgets/home_screen/drop_down_menu.dart';
@@ -46,7 +48,24 @@ class _HomeScreenState extends State<HomeScreen> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         actions: [DropDownMenu()],
-        title: const Text('My Travel Journeys'),
+        title: const Text(
+          'My Travel Journeys',
+          overflow: TextOverflow.visible,
+        ),
+        leading: FutureBuilder(
+            future: FirebaseFirestore.instance
+                .collection('users')
+                .doc(FirebaseAuth.instance.currentUser.uid)
+                .get(),
+            builder: (ctx, snapShot) {
+              var profilePicUrl = snapShot.data['imageUrl'];
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(profilePicUrl),
+                ),
+              );
+            }),
       ),
       body: Column(
         children: [
@@ -65,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ]),
                 child: Image.network(
-                  'https://media.cntraveler.com/photos/5fd26c4ddf72876c320b8001/16:9/w_2560%2Cc_limit/952456172',
+                  'https://firebasestorage.googleapis.com/v0/b/travel-journal-944cf.appspot.com/o/App%20Home%20Page%20Pic%2F_DSC0278.jpg?alt=media&token=59747c8a-2177-435b-b7f7-e2957f5f103e',
                   fit: BoxFit.cover,
                 ),
               ),

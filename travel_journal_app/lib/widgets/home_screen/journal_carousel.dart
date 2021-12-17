@@ -12,7 +12,7 @@ class JournalCarousel extends StatelessWidget {
       .collection('users')
       .doc(FirebaseAuth.instance.currentUser.uid)
       .collection('journals')
-      .orderBy('startDate', descending: true)
+      .orderBy('createdAt', descending: true)
       .snapshots();
   @override
   Widget build(BuildContext context) {
