@@ -32,30 +32,22 @@ class JournalCarousel extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    const Text(
-                      'Your Journals',
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: const <Widget>[
+                    Text(
+                      'Your Journeys',
                       style: TextStyle(
                         fontSize: 22.0,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.5,
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () => print('See All'),
-                      child: Text(
-                        'See All',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 1.0,
-                        ),
-                      ),
-                    ),
+                    Icon(Icons.travel_explore),
                   ],
                 ),
+              ),
+              const SizedBox(
+                height: 20.0,
               ),
               Container(
                 height: 300.0,

@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_journal_app/widgets/home_screen/drop_down_menu.dart';
-import 'package:travel_journal_app/widgets/journal_carousel.dart';
+import 'package:travel_journal_app/widgets/home_screen/journal_carousel.dart';
 import 'package:travel_journal_app/widgets/food_carousel.dart';
 import 'package:travel_journal_app/widgets/people_carousel.dart';
 import '../models/travel_quotes.dart';

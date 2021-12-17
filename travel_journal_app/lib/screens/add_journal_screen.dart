@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_format/date_format.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:intl/intl.dart';
+import 'package:travel_journal_app/widgets/add_journal_screen/journal_image_picker.dart';
 // import 'package:provider/provider.dart';
 // import 'package:travel_journal_app/models/journal.dart';
 // import '../models/journal_entry.dart';
@@ -32,6 +36,12 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
   var _country;
   DateTime _endDate;
 
+  File _getImage;
+
+  void _imagePickFn(File pickedImage) {
+    _getImage = pickedImage;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -56,6 +66,17 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
     if (isValid) {
       try {
         _form.currentState.save();
+
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child(userId)
+            .child(_city)
+            .child('mainpicture' + Timestamp.now().toString() + '.jpg');
+
+        await ref.putFile(_getImage);
+
+        final url = await ref.getDownloadURL();
+
         FirebaseFirestore.instance
             .collection('users')
             .doc(userId)
@@ -65,9 +86,9 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
           'country': _country,
           'travelReason': _travelReason,
           'description': _description,
-          'mainPic': _mainPic,
-          'startDate': formatDate(_startDate, [mm, '-', dd, '-', yyyy]),
-          'endDate': formatDate(_endDate, [mm, '-', dd, '-', yyyy]),
+          'mainPic': url,
+          'startDate': DateFormat('yMMMd').format(_startDate),
+          'endDate': DateFormat('yMMMd').format(_endDate),
           'createdAt': Timestamp.now(),
         });
 
@@ -76,10 +97,12 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
         });
 
         Navigator.pop(context);
-      } catch (e) {
+      } catch (error) {
+        print(error);
+        var message = 'something went wrong, try again';
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(e.message),
+            content: Text(message),
             backgroundColor: Theme.of(context).errorColor,
           ),
         );
@@ -185,77 +208,105 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
                     return null;
                   },
                 ),
-                InputDatePickerFormField(
-                  fieldHintText: 'dd-mm-yyyy',
-                  errorInvalidText: 'Pls enter a valid Date',
-                  errorFormatText: 'Pls enter a correct Date Format',
-                  fieldLabelText: 'Start Date',
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime.now(),
-                  onDateSaved: (value) {
-                    _startDate = value;
-                  },
+                const SizedBox(
+                  height: 8,
                 ),
-                InputDatePickerFormField(
-                  errorInvalidText: 'Pls enter a valid Date',
-                  errorFormatText: 'Pls enter a correct Date Format',
-                  fieldLabelText: 'End Date',
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime.now(),
-                  onDateSaved: (value) {
-                    _endDate = value;
-                  },
+                const Text('Start Date:'),
+                SizedBox(
+                  height: 50,
+                  child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.date,
+                    initialDateTime: DateTime(2018, 1, 1),
+                    onDateTimeChanged: (value) {
+                      _startDate = value;
+                    },
+                  ),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                      height: 100,
-                      width: 100,
-                      margin: EdgeInsets.only(top: 8, right: 10),
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 2, color: Colors.grey),
-                      ),
-                      child: _mainPicController.text.isEmpty
-                          ? Text('Enter a URL')
-                          : FittedBox(
-                              child: Image.network(_mainPicController.text),
-                              fit: BoxFit.cover,
-                            ),
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                        decoration:
-                            const InputDecoration(labelText: 'Image URL'),
-                        keyboardType: TextInputType.url,
-                        textInputAction: TextInputAction.done,
-                        controller: _mainPicController,
-                        focusNode: _mainPicFocusNode,
-                        onSaved: (value) {
-                          _mainPic = value;
-                        },
-                        onFieldSubmitted: (_) {
-                          _saveForm();
-                        },
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter an ImageUrl';
-                          }
+                const SizedBox(
+                  height: 8,
+                ),
+                const Text('End Date:'),
+                SizedBox(
+                  height: 50,
+                  child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.date,
+                    initialDateTime: DateTime(2018, 1, 1),
+                    onDateTimeChanged: (value) {
+                      _startDate = value;
+                    },
+                  ),
+                ),
+                JournalImagePicker(_imagePickFn),
+                // InputDatePickerFormField(
+                //   errorInvalidText: 'Pls enter a valid Date',
+                //   errorFormatText: 'Pls enter a correct Date Format',
+                //   fieldLabelText: 'Start Date',
+                //   firstDate: DateTime(2000),
+                //   lastDate: DateTime.now(),
+                //   onDateSaved: (value) {
+                //     _startDate = value;
+                //   },
+                // ),
+                // InputDatePickerFormField(
+                //   errorInvalidText: 'Pls enter a valid Date',
+                //   errorFormatText: 'Pls enter a correct Date Format',
+                //   fieldLabelText: 'End Date',
+                //   firstDate: DateTime(2000),
+                //   lastDate: DateTime.now(),
+                //   onDateSaved: (value) {
+                //     _endDate = value;
+                //   },
+                // ),
+                // Row(
+                //   crossAxisAlignment: CrossAxisAlignment.end,
+                //   children: [
+                //     Container(
+                //       height: 100,
+                //       width: 100,
+                //       margin: EdgeInsets.only(top: 8, right: 10),
+                //       decoration: BoxDecoration(
+                //         border: Border.all(width: 2, color: Colors.grey),
+                //       ),
+                //       child: _mainPicController.text.isEmpty
+                //           ? Text('Enter a URL')
+                //           : FittedBox(
+                //               child: Image.network(_mainPicController.text),
+                //               fit: BoxFit.cover,
+                //             ),
+                //     ),
+                //     Expanded(
+                //       child: TextFormField(
+                //         decoration:
+                //             const InputDecoration(labelText: 'Image URL'),
+                //         keyboardType: TextInputType.url,
+                //         textInputAction: TextInputAction.done,
+                //         controller: _mainPicController,
+                //         focusNode: _mainPicFocusNode,
+                //         onSaved: (value) {
+                //           _mainPic = value;
+                //         },
+                //         onFieldSubmitted: (_) {
+                //           _saveForm();
+                //         },
+                //         validator: (value) {
+                //           if (value.isEmpty) {
+                //             return 'Please enter an ImageUrl';
+                //           }
 
-                          if (!value.startsWith('http') ||
-                              !value.startsWith('https')) {
-                            return 'Please enter a valid URL';
-                          }
+                //           if (!value.startsWith('http') ||
+                //               !value.startsWith('https')) {
+                //             return 'Please enter a valid URL';
+                //           }
 
-                          return null;
-                        },
-                        onEditingComplete: () {
-                          setState(() {});
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                //           return null;
+                //         },
+                //         onEditingComplete: () {
+                //           setState(() {});
+                //         },
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),

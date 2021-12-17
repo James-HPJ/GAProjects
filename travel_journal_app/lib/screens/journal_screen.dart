@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_journal_app/widgets/journal_screen/journal_drop_down.dart';
+import 'package:travel_journal_app/widgets/journal_screen/photo_dialog.dart';
+import 'package:travel_journal_app/widgets/journal_screen/photo_grid.dart';
 
 class JournalScreen extends StatelessWidget {
   static const routeName = '/journal';
@@ -11,12 +13,14 @@ class JournalScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final selectedJournalId =
         ModalRoute.of(context).settings.arguments as String;
-    var journalCollection = FirebaseFirestore.instance
+    var selectedJournal = FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser.uid)
-        .collection('journals');
+        .collection('journals')
+        .doc(selectedJournalId);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         actions: [
           JournalDropDown(journalId: selectedJournalId),
@@ -25,7 +29,7 @@ class JournalScreen extends StatelessWidget {
       body: Column(
         children: [
           FutureBuilder(
-              future: journalCollection.doc(selectedJournalId).get(),
+              future: selectedJournal.get(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -37,21 +41,16 @@ class JournalScreen extends StatelessWidget {
                   children: [
                     Hero(
                       tag: selectedJournalId,
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.vertical(
-                          bottom: Radius.circular(10),
-                        ),
-                        child: Container(
-                          height: 200.0,
-                          width: double.infinity,
-                          child: Image.network(
-                            journal['mainPic'],
-                            fit: BoxFit.cover,
-                          ),
+                      child: Container(
+                        height: 200.0,
+                        width: double.infinity,
+                        child: Image.network(
+                          journal['mainPic'],
+                          fit: BoxFit.fill,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20.0),
+                    const SizedBox(height: 12.0),
                     Padding(
                       padding: const EdgeInsets.only(right: 20.0),
                       child: Row(
@@ -64,7 +63,7 @@ class JournalScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(
-                            width: 15.0,
+                            width: 10.0,
                           ),
                           Text(
                             journal['city'],
@@ -72,7 +71,7 @@ class JournalScreen extends StatelessWidget {
                                 fontSize: 25.0, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
-                            width: 15.0,
+                            width: 10.0,
                           ),
                           Text(
                             journal['country'],
@@ -83,10 +82,10 @@ class JournalScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 20.0,
+                      height: 10.0,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 20.0, bottom: 20.0),
+                      padding: const EdgeInsets.only(right: 20.0, bottom: 8),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -129,7 +128,10 @@ class JournalScreen extends StatelessWidget {
                             journal['travelReason'],
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          subtitle: Text(journal.data()['description']),
+                          subtitle: Text(
+                            journal.data()['description'],
+                            overflow: TextOverflow.fade,
+                          ),
                         ),
                       ),
                     ),
@@ -139,38 +141,7 @@ class JournalScreen extends StatelessWidget {
                   ],
                 );
               }),
-          FutureBuilder(
-            future: journalCollection
-                .doc(selectedJournalId)
-                .collection('photos')
-                .get(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              var photos = snapshot.data.docs;
-              return Container(
-                height: 150.0,
-                child: GridView.builder(
-                    padding: const EdgeInsets.all(10.0),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 3 / 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10),
-                    itemCount: photos.length,
-                    itemBuilder: (ctx, index) => GridTile(
-                          child: Image.network(
-                            photos[index]['imageUrl'],
-                            fit: BoxFit.cover,
-                          ),
-                        )),
-              );
-            },
-          ),
+          PhotoGrid(selectedJournalId),
         ],
       ),
     );

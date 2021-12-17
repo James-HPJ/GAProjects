@@ -7,7 +7,7 @@ class DropDownMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 10.0),
+      padding: const EdgeInsets.only(right: 20.0),
       child: DropdownButton(
         icon: Icon(Icons.more_vert),
         items: [

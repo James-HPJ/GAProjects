@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter/services.dart';
 import 'package:travel_journal_app/widgets/auth/auth_form.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -20,6 +22,7 @@ class _AuthScreenState extends State<AuthScreen> {
     String password,
     String username,
     bool islogin,
+    File imageFile,
   ) async {
     UserCredential userCredential;
     try {
@@ -32,12 +35,22 @@ class _AuthScreenState extends State<AuthScreen> {
       } else {
         userCredential = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
+
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('user_image')
+            .child(userCredential.user.uid + '.jpg');
+
+        await ref.putFile(imageFile);
+        final url = await ref.getDownloadURL();
+
         FirebaseFirestore.instance
             .collection('users')
             .doc(userCredential.user.uid)
             .set({
           'username': username,
           'dateJoined': DateFormat('yMMMd').format(DateTime.now()),
+          'imageUrl': url,
         });
       }
     } on PlatformException catch (error) {
