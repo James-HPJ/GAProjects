@@ -9,7 +9,7 @@ class DropDownMenu extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 20.0),
       child: DropdownButton(
-        icon: Icon(Icons.more_vert),
+        icon: const Icon(Icons.more_vert),
         items: [
           DropdownMenuItem(
             child: Container(
@@ -22,7 +22,7 @@ class DropDownMenu extends StatelessWidget {
                   const SizedBox(
                     width: 8,
                   ),
-                  Text('Logout')
+                  const Text('Logout')
                 ],
               ),
             ),
@@ -39,7 +39,7 @@ class DropDownMenu extends StatelessWidget {
                   const SizedBox(
                     width: 8,
                   ),
-                  Text('Add Journal')
+                  const Text('Add Journal')
                 ],
               ),
             ),

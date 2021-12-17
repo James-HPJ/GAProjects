@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_journal_app/widgets/journal_screen/journal_drop_down.dart';
-import 'package:travel_journal_app/widgets/journal_screen/photo_dialog.dart';
 import 'package:travel_journal_app/widgets/journal_screen/photo_grid.dart';
 
 class JournalScreen extends StatelessWidget {
@@ -28,8 +27,8 @@ class JournalScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          FutureBuilder(
-              future: selectedJournal.get(),
+          StreamBuilder(
+              stream: selectedJournal.snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(

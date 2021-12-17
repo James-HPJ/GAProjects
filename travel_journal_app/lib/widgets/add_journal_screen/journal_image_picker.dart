@@ -12,7 +12,6 @@ class JournalImagePicker extends StatefulWidget {
 }
 
 class _UserImagePickerState extends State<JournalImagePicker> {
-  @override
   File _pickedImage;
 
   void _imagePicker(ImageSource source) async {
@@ -30,13 +29,14 @@ class _UserImagePickerState extends State<JournalImagePicker> {
     widget.imagePickFn(_pickedImage);
   }
 
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
           height: 150,
           width: 150,
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             border: Border.all(width: 2, color: Colors.grey),
           ),

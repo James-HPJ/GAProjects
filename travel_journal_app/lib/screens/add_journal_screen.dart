@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,12 +5,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:travel_journal_app/widgets/add_journal_screen/journal_image_picker.dart';
-// import 'package:provider/provider.dart';
-// import 'package:travel_journal_app/models/journal.dart';
-// import '../models/journal_entry.dart';
 
 class AddJournalScreen extends StatefulWidget {
   static const routeName = '/add-journal';
+
   @override
   _AddJournalScreenState createState() => _AddJournalScreenState();
 }
@@ -24,35 +21,19 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
   final _cityFocusNode = FocusNode();
   final _travelReasonFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
-  final _startDateFocusNode = FocusNode();
-  final _mainPicFocusNode = FocusNode();
-  final _mainPicController = TextEditingController();
 
+  var _country;
   var _city;
   var _travelReason;
   var _description;
-  DateTime _startDate;
   var _mainPic;
-  var _country;
-  DateTime _endDate;
+  var _startDate;
+  var _endDate;
 
   File _getImage;
 
   void _imagePickFn(File pickedImage) {
     _getImage = pickedImage;
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _mainPicFocusNode.addListener(_updateImageUrl);
-  }
-
-  void _updateImageUrl() {
-    if (!_mainPicFocusNode.hasFocus) {
-      setState(() {});
-    }
   }
 
   void _saveForm() async {
@@ -87,8 +68,8 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
           'travelReason': _travelReason,
           'description': _description,
           'mainPic': url,
-          'startDate': DateFormat('yMMMd').format(_startDate),
-          'endDate': DateFormat('yMMMd').format(_endDate),
+          'startDate': DateFormat.yMMMd().format(_startDate),
+          'endDate': DateFormat.yMMMd().format(_endDate),
           'createdAt': Timestamp.now(),
         });
 
@@ -110,16 +91,6 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
     }
   }
 
-  // ignore: prefer_final_fields
-  // var _newProduct = Journal(
-  //     profilePic: '',
-  //     country: '',
-  //     city: '',
-  //     startDate: null,
-  //     endDate: null,
-  //     purpose: '',
-  //     inAPhrase: '');
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,9 +100,9 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
                 onPressed: () {
                   _saveForm();
                 },
-                icon: Icon(Icons.save))
+                icon: const Icon(Icons.save))
           ],
-          title: Text('Add New Journal Entry'),
+          title: const Text('Add New Journal Entry'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -195,9 +166,6 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
                       const InputDecoration(labelText: 'Description of Trip'),
                   textInputAction: TextInputAction.next,
                   focusNode: _descriptionFocusNode,
-                  onFieldSubmitted: (_) {
-                    Focus.of(context).requestFocus(_startDateFocusNode);
-                  },
                   onSaved: (value) {
                     _description = value;
                   },
@@ -208,105 +176,54 @@ class _AddJournalScreenState extends State<AddJournalScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(
-                  height: 8,
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    TextButton(
+                        onPressed: () async {
+                          final pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000, 1, 1),
+                            lastDate: DateTime(2025, 1, 1),
+                          );
+                          if (pickedDate != null && pickedDate != _startDate) {
+                            setState(() {
+                              _startDate = pickedDate;
+                            });
+                          }
+                        },
+                        child: const Text('Start Date')),
+                    Text(_startDate != null
+                        ? DateFormat.yMMMd().format(_startDate)
+                        : 'No date selected')
+                  ],
                 ),
-                const Text('Start Date:'),
-                SizedBox(
-                  height: 50,
-                  child: CupertinoDatePicker(
-                    mode: CupertinoDatePickerMode.date,
-                    initialDateTime: DateTime(2018, 1, 1),
-                    onDateTimeChanged: (value) {
-                      _startDate = value;
-                    },
-                  ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    TextButton(
+                        onPressed: () async {
+                          final pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000, 1, 1),
+                            lastDate: DateTime(2025, 1, 1),
+                          );
+                          if (pickedDate != null && pickedDate != _endDate) {
+                            setState(() {
+                              _endDate = pickedDate;
+                            });
+                          }
+                        },
+                        child: const Text('End Date')),
+                    Text(_endDate != null
+                        ? DateFormat.yMMMd().format(_endDate)
+                        : 'No date selected')
+                  ],
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
-                const Text('End Date:'),
-                SizedBox(
-                  height: 50,
-                  child: CupertinoDatePicker(
-                    mode: CupertinoDatePickerMode.date,
-                    initialDateTime: DateTime(2018, 1, 1),
-                    onDateTimeChanged: (value) {
-                      _startDate = value;
-                    },
-                  ),
-                ),
+                const SizedBox(height: 8),
                 JournalImagePicker(_imagePickFn),
-                // InputDatePickerFormField(
-                //   errorInvalidText: 'Pls enter a valid Date',
-                //   errorFormatText: 'Pls enter a correct Date Format',
-                //   fieldLabelText: 'Start Date',
-                //   firstDate: DateTime(2000),
-                //   lastDate: DateTime.now(),
-                //   onDateSaved: (value) {
-                //     _startDate = value;
-                //   },
-                // ),
-                // InputDatePickerFormField(
-                //   errorInvalidText: 'Pls enter a valid Date',
-                //   errorFormatText: 'Pls enter a correct Date Format',
-                //   fieldLabelText: 'End Date',
-                //   firstDate: DateTime(2000),
-                //   lastDate: DateTime.now(),
-                //   onDateSaved: (value) {
-                //     _endDate = value;
-                //   },
-                // ),
-                // Row(
-                //   crossAxisAlignment: CrossAxisAlignment.end,
-                //   children: [
-                //     Container(
-                //       height: 100,
-                //       width: 100,
-                //       margin: EdgeInsets.only(top: 8, right: 10),
-                //       decoration: BoxDecoration(
-                //         border: Border.all(width: 2, color: Colors.grey),
-                //       ),
-                //       child: _mainPicController.text.isEmpty
-                //           ? Text('Enter a URL')
-                //           : FittedBox(
-                //               child: Image.network(_mainPicController.text),
-                //               fit: BoxFit.cover,
-                //             ),
-                //     ),
-                //     Expanded(
-                //       child: TextFormField(
-                //         decoration:
-                //             const InputDecoration(labelText: 'Image URL'),
-                //         keyboardType: TextInputType.url,
-                //         textInputAction: TextInputAction.done,
-                //         controller: _mainPicController,
-                //         focusNode: _mainPicFocusNode,
-                //         onSaved: (value) {
-                //           _mainPic = value;
-                //         },
-                //         onFieldSubmitted: (_) {
-                //           _saveForm();
-                //         },
-                //         validator: (value) {
-                //           if (value.isEmpty) {
-                //             return 'Please enter an ImageUrl';
-                //           }
-
-                //           if (!value.startsWith('http') ||
-                //               !value.startsWith('https')) {
-                //             return 'Please enter a valid URL';
-                //           }
-
-                //           return null;
-                //         },
-                //         onEditingComplete: () {
-                //           setState(() {});
-                //         },
-                //       ),
-                //     ),
-                //   ],
-                // ),
               ],
             ),
           ),
