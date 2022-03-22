@@ -52,20 +52,20 @@ class _HomeScreenState extends State<HomeScreen> {
           'My Travel Journeys',
           overflow: TextOverflow.visible,
         ),
-        leading: FutureBuilder(
-            future: FirebaseFirestore.instance
-                .collection('users')
-                .doc(FirebaseAuth.instance.currentUser.uid)
-                .get(),
-            builder: (ctx, snapShot) {
-              var profilePicUrl = snapShot.data['imageUrl'];
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(profilePicUrl),
-                ),
-              );
-            }),
+        // leading: FutureBuilder(
+        //     future: FirebaseFirestore.instance
+        //         .collection('users')
+        //         .doc(FirebaseAuth.instance.currentUser.uid)
+        //         .get(),
+        //     builder: (ctx, snapShot) {
+        //       var profilePicUrl = snapShot.data['imageUrl'];
+        //       return Padding(
+        //         padding: const EdgeInsets.all(8.0),
+        //         child: CircleAvatar(
+        //           backgroundImage: NetworkImage(profilePicUrl),
+        //         ),
+        //       );
+        //     }),
       ),
       body: Column(
         children: [

@@ -24,6 +24,21 @@ class JournalCarousel extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
+
+          if (snapshot.data.docs.isEmpty) {
+            return SizedBox(
+              height: 200,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    'Start adding journals by clicking the drop down menu on the appbar!',
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            );
+          }
           // final currentUser = FirebaseAuth.instance.currentUser.uid;
           final journalDocs = snapshot.data.docs;
 
